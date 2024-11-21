@@ -89,8 +89,8 @@ git push origin feature/nom_de_fonctionnalité
 
 
 ## Auteurs
-Karim ABDALLAH - @abdhkarim
-LAZHARI Haroun-Rachid @CambouiMan
+- Karim ABDALLAH - @abdhkarim
+- LAZHARI Haroun-Rachid @CambouiMan
 
 ## Liens utiles
 
