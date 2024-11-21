@@ -99,5 +99,6 @@ git push origin feature/nom_de_fonctionnalité
 - [NIST CVE](https://nvd.nist.gov/vuln)
 
 ## Licence
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus d'informations
+Ce projet est sous licence [MIT](https://opensource.org/licenses/MIT). Voir le fichier `LICENSE` pour plus d'informations.
+
 
