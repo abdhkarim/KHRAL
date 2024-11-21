@@ -73,9 +73,9 @@ Si vous souhaitez contribuer à ce projet, voici les étapes à suivre :
 
 1. **Forkez le repository**.
 2. **Créez une branche pour vos nouvelles fonctionnalités** :
-   ```bash
+```bash
    git checkout -b feature/nom_de_fonctionnalité
-   ```
+```
 3. **Commitez vos changements :**
 Copier le code
 ```bash
