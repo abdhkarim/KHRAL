@@ -35,16 +35,15 @@ pip install -r requirements.txt
 ```
 ## Installation
 
-1. **Clonez ce repository sur votre machine** :
+1. **Clone ce repository sur ta machine** :
 
 ```bash
 git clone https://github.com/votre-utilisateur/KHRAL.git
 cd KHRAL
 ```
 
-2. Créez un environnement virtuel et activez-le (optionnel mais recommandé) :
+2. **Crée un environnement virtuel et activez-le (optionnel mais recommandé)** :
 bash
-Copier le code
 
 ```bash
 python3 -m venv env
@@ -71,26 +70,27 @@ Cela ouvrira une fenêtre graphique avec les différents outils de tests de vuln
 
 Si vous souhaitez contribuer à ce projet, voici les étapes à suivre :
 
-1. **Forkez le repository**.
-2. **Créez une branche pour vos nouvelles fonctionnalités** :
+1. **Fork le repository**.
+2. **Crée une branche pour tes nouvelles fonctionnalités** :
 ```bash
-   git checkout -b feature/nom_de_fonctionnalité
+git checkout -b feature/nom_de_fonctionnalité
 ```
-3. **Commitez vos changements :**
+3. **Commite tes changements :**
 Copier le code
 ```bash
 git commit -am 'Ajout d'une nouvelle fonctionnalité'
 ```
-4. **Poussez sur la branche :**
+4. **Pousse sur la branche :**
 Copier le code
 ```bash
 git push origin feature/nom_de_fonctionnalité
 ```
-5. **Ouvrez une Pull Request sur le repository principal.**
+5. **Ouvre une Pull Request sur le repository principal.**
 
 
 ## Auteurs
 Karim ABDALLAH - @abdhkarim
+LAZHARI Haroun-Rachid @CambouiMan
 
 ## Liens utiles
 
