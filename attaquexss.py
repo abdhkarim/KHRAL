@@ -22,6 +22,14 @@ def test_xss(url, results_text):
     if not vulnerable:
         results_text.insert(tk.END, "Aucune vulnérabilité détectée.\n")
 
+def get_ip():
+    try:
+        response = requests.get("https://api.ipify.org")
+        ip = response.text
+        return ip
+    except requests.exceptions.RequestException:
+        return "IP non disponible"
+
 def show_xss_page(back_to_menu):
     """Show the XSS attack page."""
     xss_window = tk.Tk()
@@ -93,10 +101,4 @@ def show_xss_page(back_to_menu):
 
     xss_window.mainloop()
 
-def get_ip():
-    try:
-        response = requests.get("https://api.ipify.org")
-        ip = response.text
-        return ip
-    except requests.exceptions.RequestException:
-        return "IP non disponible"
+
