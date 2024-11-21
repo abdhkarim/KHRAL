@@ -66,6 +66,24 @@ python appli.py
 ```
 Cela ouvrira une fenêtre graphique avec les différents outils de tests de vulnérabilités.
 
+## Contribuer
+Si vous souhaitez contribuer à ce projet, voici les étapes :
+
+Forkez le repository.
+Créez une branche pour vos nouvelles fonctionnalités (git checkout -b feature/nom_de_fonctionnalité).
+Commitez vos changements (git commit -am 'Ajout d'une nouvelle fonctionnalité').
+Poussez sur la branche (git push origin feature/nom_de_fonctionnalité).
+Ouvrez une Pull Request sur le repository principal.
 
 
+## Auteurs
+Karim ABDALLAH - @abdhkarim
+
+## Liens utiles
+OWASP Top 10
+MITRE ATT&CK
+NIST CVE
+
+## Licence
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus d'informations
 
