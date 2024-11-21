@@ -37,9 +37,10 @@ pip install -r requirements.txt
 
 1. **Clonez ce repository sur votre machine** :
 
-   ```bash
-   git clone https://github.com/votre-utilisateur/KHRAL.git
-   cd KHRAL
+```bash
+git clone https://github.com/votre-utilisateur/KHRAL.git
+cd KHRAL
+```
 
 2. Créez un environnement virtuel et activez-le (optionnel mais recommandé) :
 bash
