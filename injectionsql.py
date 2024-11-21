@@ -5,6 +5,7 @@ import json
 import customtkinter as ctk
 import requests
 import webbrowser
+from PIL import Image
 
 def load_payloads(file_path):
     """Charge les payloads depuis un fichier JSON."""
@@ -17,8 +18,7 @@ def load_payloads(file_path):
     except json.JSONDecodeError:
         print("Erreur lors du chargement du fichier JSON.")
         return []
-
-
+    
 def test_sql_injection(url, results_text):
     """
     Test d'une injection SQL en envoyant une série de charges utiles malveillantes à l'URL fournie.
@@ -74,6 +74,7 @@ def get_ip():
         return "IP non disponible"
 
 
+
 def show_sql_page(back_to_menu):
     """Show the SQL Injection page."""
     sql_window = tk.Tk()
@@ -96,8 +97,10 @@ def show_sql_page(back_to_menu):
     
     sql_window.config(bg="#2e2e2e")  # Fond sombre pour un look moderne
 
-    # Configurer une seule colonne pour tout centrer
+    # Configurer les colonnes et lignes
     sql_window.grid_columnconfigure(0, weight=1)
+    sql_window.grid_rowconfigure(6, weight=1)  # Espace entre contenu et label en bas
+    sql_window.grid_rowconfigure(7, weight=0)  # Dernière ligne fixe
 
     # Titre au centre
     title_label = tk.Label(sql_window, text="Injection SQL", font=("Helvetica", 32, "bold"), fg="white", bg="#2e2e2e")
@@ -114,48 +117,55 @@ def show_sql_page(back_to_menu):
     results_text = tk.Text(sql_window, height=15, width=70, font=("Helvetica", 14))
     results_text.grid(row=3, column=0, pady=10, sticky="n")
 
-    # Bouton pour tester l'attaque XSS
+    # Bouton pour tester les injections SQL
     test_button = ctk.CTkButton(sql_window, 
-                            text="Tester les injections SQL", 
-                            font=("Helvetica", 14), 
-                            fg_color="#4CAF50",  # Couleur de fond
-                            hover_color="#45a049",  # Couleur au survol
-                            text_color="black",  # Couleur du texte
-                             command=lambda: test_sql_injection(url_entry.get(), results_text),
-                            width=200,  # Largeur du bouton
-                            height=50,  # Hauteur du bouton
-                            corner_radius=10)  # Coins arrondis
+                                text="Tester les injections SQL", 
+                                font=("Helvetica", 14), 
+                                fg_color="#4CAF50",  # Couleur de fond
+                                hover_color="#45a049",  # Couleur au survol
+                                text_color="black",  # Couleur du texte
+                                command=lambda: test_sql_injection(url_entry.get(), results_text),
+                                width=200,  # Largeur du bouton
+                                height=50,  # Hauteur du bouton
+                                corner_radius=10)  # Coins arrondis
     test_button.grid(row=4, column=0, pady=10, sticky="n")
 
-    # Bouton pour revenir au menu principal (style similaire au premier)
+    # Bouton pour revenir au menu principal
     back_button = ctk.CTkButton(sql_window, 
-                            text="Retour", 
-                            font=("Helvetica", 14), 
-                            fg_color="#4CAF50",  # Même couleur de fond que pour le premier bouton
-                            hover_color="#45a049",  # Même couleur au survol
-                            text_color="black",  # Même couleur de texte
-                            command=lambda: [sql_window.destroy(), back_to_menu()],
-                            width=200,  # Largeur du bouton
-                            height=50,  # Hauteur du bouton
-                            corner_radius=10)  # Coins arrondis
+                                text="Retour", 
+                                font=("Helvetica", 14), 
+                                fg_color="#4CAF50", 
+                                hover_color="#45a049", 
+                                text_color="black", 
+                                command=lambda: [sql_window.destroy(), back_to_menu()],
+                                width=200, 
+                                height=50, 
+                                corner_radius=10)
     back_button.grid(row=5, column=0, pady=10, sticky="n")
 
     # Ajouter un label "Documentation" avec une image cliquable en bas à gauche
     def open_documentation():
-        url = "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection"
-        webbrowser.open(url)  # Ouvre le lien dans le navigateur par défaut
-    
+        webbrowser.open("https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection")  # Ouvre le lien dans le navigateur
+
     # Charger l'image pour le label
-    doc_image = ctk.CTkImage("image/documentation.png", size=(20, 20))  # Assurez-vous que l'image est dans le bon dossier
-    doc_label = ctk.CTkLabel(sql_window, 
-                             text="Documentation", 
-                             font=("Helvetica", 14), 
-                             fg_color="#2e2e2e", 
-                             text_color="white", 
-                             cursor="hand2",  # Changer le curseur pour un lien cliquable
-                             image=doc_image, 
-                             compound="left")  # Le texte à droite de l'image
-    doc_label.grid(row=6, column=0, pady=20, sticky="sw", padx=20)  # Positionner en bas à gauche
+    try:
+        doc_image_image = Image.open("image/documentation.png")
+        doc_image = doc_image.resize((20, 20))
+        doc_image = ctk.CTkImage(doc_image, size=(20, 20))
+    except tk.TclError:
+        print("L'image 'documentation.png' est introuvable.")
+        doc_image = None  # Gérer le cas où l'image est absente
+
+    # Label cliquable
+    doc_label = tk.Label(sql_window, 
+                         text=" Documentation",  # Espace avant le texte pour l'image
+                         font=("Helvetica", 14), 
+                         fg="white", 
+                         bg="#2e2e2e", 
+                         cursor="hand2", 
+                         image=doc_image, 
+                         compound="left")  # Positionner l'image à gauche du texte
+    doc_label.grid(row=7, column=0, padx=20, pady=10, sticky="w")  # Positionner tout à gauche
 
     # Lier l'action d'ouverture du lien
     doc_label.bind("<Button-1>", lambda e: open_documentation())
