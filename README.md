@@ -32,3 +32,12 @@ Pour installer les dépendances Python, vous pouvez utiliser `pip` avec le fichi
 
 ```bash
 pip install -r requirements.txt
+```
+## Installation
+
+1. **Clonez ce repository sur votre machine** :
+
+   ```bash
+   git clone https://github.com/votre-utilisateur/KHRAL.git
+   cd KHRAL
+  ```
