@@ -2,7 +2,7 @@
 
 ### Description du projet
 
-**KHRAL** est un projet de sécurité destiné à tester et exploiter certaines vulnérabilités web courantes telles que l'**injection SQL**, les **attaques XSS** (Cross-Site Scripting), et d'autres vulnérabilités mentionnées dans le **Top 10 de l'OWASP**. Ce projet a pour but de créer des outils permettant de tester ces vulnérabilités de manière personnalisée, tout en comprenant le fonctionnement des tests de pénétration. Les outils créés seront utilisés dans des tests d'intrusion (pentesting) pour identifier des failles de sécurité dans les applications web.
+**KHRAL** est un logiciel destiné à tester et exploiter certaines vulnérabilités web courantes telles que l'**injection SQL**, les **attaques XSS** (Cross-Site Scripting), et d'autres vulnérabilités mentionnées dans le **Top 10 de l'OWASP**. Ce projet a pour but de créer des outils permettant de tester ces vulnérabilités de manière personnalisée, tout en comprenant le fonctionnement des tests de pénétration. Les outils créés seront utilisés dans des tests d'intrusion (pentesting) pour identifier des failles de sécurité dans les applications web.
 
 Le projet regroupe plusieurs outils permettant d'identifier et d'exploiter des vulnérabilités communes dans les applications web, tout en permettant aux utilisateurs de mieux comprendre comment ces outils fonctionnent en coulisses.
 
