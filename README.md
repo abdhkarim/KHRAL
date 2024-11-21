@@ -40,4 +40,32 @@ pip install -r requirements.txt
    ```bash
    git clone https://github.com/votre-utilisateur/KHRAL.git
    cd KHRAL
-  ```
+
+2. Créez un environnement virtuel et activez-le (optionnel mais recommandé) :
+bash
+Copier le code
+
+```bash
+python3 -m venv env
+source env/bin/activate  # Sur macOS/Linux
+env\Scripts\activate     # Sur Windows
+```
+
+3. Installez les dépendances :
+Copier le code
+```bash
+pip install -r requirements.txt
+```
+
+4. Utilisation
+Pour lancer l'application et accéder aux outils de tests, exécutez le fichier principal appli.py :
+
+Copier le code
+```bash
+python appli.py
+```
+Cela ouvrira une fenêtre graphique avec les différents outils de tests de vulnérabilités.
+
+
+
+
