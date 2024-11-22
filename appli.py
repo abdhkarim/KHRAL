@@ -1,20 +1,10 @@
 import customtkinter as ctk
 from PIL import Image, ImageTk
-import requests
+import psutil  # Pour les informations système
 from attaquexss import show_xss_page
-from apropos import show_about_page  # Import de la fonction de la page apropos.py
+from apropos import show_about_page
 from parametres import show_settings_page
 from injectionsql import show_sql_page
-
-
-# Fonction pour récupérer l'adresse IP de l'utilisateur
-def get_ip():
-    try:
-        response = requests.get("https://api.ipify.org")
-        ip = response.text
-        return ip
-    except requests.exceptions.RequestException:
-        return "IP non disponible"
 
 # Fonction pour fermer l'application
 def quit_application():
@@ -22,23 +12,22 @@ def quit_application():
 
 # Fonction pour créer un bouton avec image et texte
 def create_button(frame, text, row, column, command, image_path=None):
-    # Création du bouton avec une image si elle est fournie
     button = ctk.CTkButton(frame, 
                            text=text, 
                            font=("Helvetica", 14), 
                            fg_color="#4CAF50", 
-                           hover_color="#45a049",  # Couleur au survol
+                           hover_color="#45a049", 
                            command=command,
-                           width=200,  # Largeur du bouton
-                           height=50,  # Hauteur du bouton
-                           corner_radius=10)  # Coins arrondis
+                           width=200, 
+                           height=50, 
+                           corner_radius=10)
 
     if image_path:
-        image = Image.open(image_path)  # Ouvrir l'image
-        image = image.resize((20, 20))  # Redimensionner l'image
-        image = ctk.CTkImage(image, size=(20, 20))  # Créer l'image pour CustomTkinter
-        button.configure(image=image, compound="left")  # Ajouter l'image au bouton à gauche du texte
-        button.image = image  # Garder une référence à l'image pour éviter qu'elle ne soit supprimée
+        image = Image.open(image_path)
+        image = image.resize((20, 20))
+        image = ctk.CTkImage(image, size=(20, 20))
+        button.configure(image=image, compound="left")
+        button.image = image
 
     button.grid(row=row, column=column, padx=10, pady=10, sticky="nsew")
     return button
@@ -55,11 +44,23 @@ def go_to_page(current_window, page):
     elif page == "parametres":
         show_settings_page(main_menu)
 
+# Fonction pour récupérer les informations système
+def get_system_info():
+    cpu_usage = psutil.cpu_percent(interval=1)  # Pourcentage d'utilisation du CPU
+    memory = psutil.virtual_memory()
+    memory_usage = memory.percent  # Pourcentage d'utilisation de la RAM
+    return f"CPU: {cpu_usage}% | RAM: {memory_usage}%"
+
+# Mettre à jour les informations système dynamiquement
+def update_system_info(label):
+    label.configure(text=get_system_info())  # Utilisation de 'configure' au lieu de 'config'
+    label.after(1000, update_system_info, label)  # Mettre à jour toutes les secondes
+
 
 # Fenêtre principale
 def main_menu():
-    global root  # Pour rendre root accessible dans la fonction quit_application
-    root = ctk.CTk()  # Utilisation de CustomTkinter pour la fenêtre
+    global root
+    root = ctk.CTk()
     root.title("KHRAL - Menu Principal")
     
     window_width = 1000
@@ -75,27 +76,26 @@ def main_menu():
     root.config(bg="#2e2e2e")
 
     # Configurer la grille pour s'adapter au redimensionnement de la fenêtre
-    root.grid_columnconfigure(0, weight=1, minsize=100)  # Colonne pour le logo
-    root.grid_columnconfigure(1, weight=3, minsize=400)  # Colonne pour le titre et l'IP
-    root.grid_columnconfigure(2, weight=1, minsize=100)  # Colonne pour l'IP
-    
-    root.grid_rowconfigure(0, weight=1)  # Ligne pour le logo
-    root.grid_rowconfigure(1, weight=2)  # Ligne pour le titre
-    root.grid_rowconfigure(2, weight=3)  # Ligne pour les boutons
-    root.grid_rowconfigure(3, weight=1)  # Ligne pour le bouton quitter
+    root.grid_columnconfigure(0, weight=1, minsize=100)  
+    root.grid_columnconfigure(1, weight=3, minsize=400)  
+    root.grid_columnconfigure(2, weight=1, minsize=100)  
+
+    root.grid_rowconfigure(0, weight=1)  
+    root.grid_rowconfigure(1, weight=2)  
+    root.grid_rowconfigure(2, weight=3)  
+    root.grid_rowconfigure(3, weight=1)  
 
     # Logo en haut à gauche avec CTkImage
     logo_image = Image.open("image/logo.png")
-    logo_image = logo_image.resize((100, 100))  # Taille initiale du logo
-    logo_image = ctk.CTkImage(logo_image, size=(100, 100))  # Utilisation de CTkImage pour une gestion améliorée de l'image
-    logo_label = ctk.CTkLabel(root, image=logo_image, fg_color="#2e2e2e", text="")  # Ajoute text="" pour ne pas afficher de texte
+    logo_image = logo_image.resize((100, 100))
+    logo_image = ctk.CTkImage(logo_image, size=(100, 100))
+    logo_label = ctk.CTkLabel(root, image=logo_image, fg_color="#2e2e2e", text="")
     logo_label.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
 
-
-    # Affichage de l'adresse IP de l'utilisateur
-    user_ip = get_ip()
-    ip_label = ctk.CTkLabel(root, text=f"Votre IP: {user_ip}", font=("Helvetica", 14), text_color="white", fg_color="#2e2e2e")
-    ip_label.grid(row=0, column=2, padx=10, pady=10, sticky="ne")
+    # Affichage des informations système
+    system_info_label = ctk.CTkLabel(root, text=get_system_info(), font=("Helvetica", 14), text_color="white", fg_color="#2e2e2e")
+    system_info_label.grid(row=0, column=2, padx=10, pady=10, sticky="ne")
+    update_system_info(system_info_label)  # Met à jour les informations en temps réel
 
     # Titre au centre
     title_label = ctk.CTkLabel(root, text="BIENVENUE SUR KHRAL", font=("Helvetica", 32, "bold"), text_color="white", fg_color="#2e2e2e")
