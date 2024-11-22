@@ -1,11 +1,11 @@
 import customtkinter as ctk
 from PIL import Image, ImageTk
 import requests
-import os
-from injectionsql import show_sql_page
 from attaquexss import show_xss_page
 from apropos import show_about_page  # Import de la fonction de la page apropos.py
 from parametres import show_settings_page
+from injectionsql import show_sql_page
+
 
 # Fonction pour récupérer l'adresse IP de l'utilisateur
 def get_ip():
@@ -22,6 +22,7 @@ def quit_application():
 
 # Fonction pour créer un bouton avec image et texte
 def create_button(frame, text, row, column, command, image_path=None):
+    # Création du bouton avec une image si elle est fournie
     button = ctk.CTkButton(frame, 
                            text=text, 
                            font=("Helvetica", 14), 
@@ -31,6 +32,14 @@ def create_button(frame, text, row, column, command, image_path=None):
                            width=200,  # Largeur du bouton
                            height=50,  # Hauteur du bouton
                            corner_radius=10)  # Coins arrondis
+
+    if image_path:
+        image = Image.open(image_path)  # Ouvrir l'image
+        image = image.resize((20, 20))  # Redimensionner l'image
+        image = ctk.CTkImage(image, size=(20, 20))  # Créer l'image pour CustomTkinter
+        button.configure(image=image, compound="left")  # Ajouter l'image au bouton à gauche du texte
+        button.image = image  # Garder une référence à l'image pour éviter qu'elle ne soit supprimée
+
     button.grid(row=row, column=column, padx=10, pady=10, sticky="nsew")
     return button
 
@@ -79,8 +88,9 @@ def main_menu():
     logo_image = Image.open("image/logo.png")
     logo_image = logo_image.resize((100, 100))  # Taille initiale du logo
     logo_image = ctk.CTkImage(logo_image, size=(100, 100))  # Utilisation de CTkImage pour une gestion améliorée de l'image
-    logo_label = ctk.CTkLabel(root, image=logo_image, fg_color="#2e2e2e")
+    logo_label = ctk.CTkLabel(root, image=logo_image, fg_color="#2e2e2e", text="")  # Ajoute text="" pour ne pas afficher de texte
     logo_label.grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+
 
     # Affichage de l'adresse IP de l'utilisateur
     user_ip = get_ip()
@@ -95,9 +105,9 @@ def main_menu():
     button_frame = ctk.CTkFrame(root, fg_color="#2e2e2e")
     button_frame.grid(row=2, column=0, columnspan=3, pady=20)
 
-    # Boutons avec un style moderne
-    sql_button = create_button(button_frame, "Injection SQL", 0, 0, lambda: go_to_page(root, "sql"))
-    xss_button = create_button(button_frame, "Attaque XSS", 0, 1, lambda: go_to_page(root, "xss"))
+    # Boutons avec un style moderne et images
+    sql_button = create_button(button_frame, "Injection SQL", 0, 0, lambda: go_to_page(root, "sql"), "image/sqlinjection.png")
+    xss_button = create_button(button_frame, "Attaque XSS", 0, 1, lambda: go_to_page(root, "xss"), "image/attaquexss.png")
 
     # Label Quitter
     logout_image = Image.open("image/logout.png")
@@ -109,7 +119,7 @@ def main_menu():
     logout_label.bind("<Button-1>", lambda e: quit_application())
     logout_label.image = logout_image
 
-    # Label À propos
+    # Label Paramètres
     about_image = Image.open("image/settings.png")
     about_image = about_image.resize((20, 20))
     about_image = ctk.CTkImage(about_image, size=(20, 20))
