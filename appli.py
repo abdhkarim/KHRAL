@@ -6,6 +6,9 @@ from attaquexss import show_xss_page
 from apropos import show_about_page
 from parametres import show_settings_page
 from injectionsql import show_sql_page
+from scanner_api import show_api_scanner_page
+from access_control import show_access_control_page
+from general_scanner import show_general_scanner_page
 
 # Fonction pour quitter l'application
 def quit_application():
@@ -30,6 +33,12 @@ def go_to_page(current_window, page):
         show_sql_page(main_menu)
     elif page == "xss":
         show_xss_page(main_menu)
+    elif page == "api_scanner":
+        show_api_scanner_page(main_menu)
+    elif page == "access_control":
+        show_access_control_page(main_menu)
+    elif page == "general_scanner":
+        show_general_scanner_page(main_menu)
     elif page == "apropos":
         show_about_page(main_menu)
     elif page == "parametres":
@@ -40,7 +49,7 @@ def main_menu():
     global root
     root = ctk.CTk()
     root.title("KHRAL - Menu Principal")
-    root.geometry("1000x700")
+    root.geometry("1200x800")
     root.configure(bg="#1e1e1e")
 
     # Bandeau supérieur
@@ -63,12 +72,17 @@ def main_menu():
     content_frame.pack(expand=True, fill="both", padx=20, pady=20)
 
     # Cartes avec boutons
-    for idx, (title, icon, command) in enumerate([
+    features = [
         ("Injection SQL", "image/sqlinjection.png", lambda: go_to_page(root, "sql")),
         ("Attaque XSS", "image/attaquexss.png", lambda: go_to_page(root, "xss")),
+        ("Scanner API", "image/api_scanner.png", lambda: go_to_page(root, "api_scanner")),
+        ("Contrôle des Autorisations", "image/access_control.png", lambda: go_to_page(root, "access_control")),
+        ("Scanner Général", "image/general_scanner.png", lambda: go_to_page(root, "general_scanner")),
         ("Paramètres", "image/settings.png", lambda: go_to_page(root, "parametres")),
-        ("À Propos", "image/info.png", lambda: go_to_page(root, "apropos"))
-    ]):
+        ("À Propos", "image/about.png", lambda: go_to_page(root, "apropos")),
+    ]
+
+    for idx, (title, icon, command) in enumerate(features):
         card = ctk.CTkFrame(content_frame, fg_color="#2e2e2e", corner_radius=15)
         card.grid(row=idx // 2, column=idx % 2, padx=20, pady=20, sticky="nsew")
 
