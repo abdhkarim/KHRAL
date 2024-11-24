@@ -28,11 +28,7 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants sur votre
   - `tkinter` : pour l'interface graphique.
   - `Pillow` : pour afficher des images dans l'interface.
 
-Pour installer les dépendances Python, vous pouvez utiliser `pip` avec le fichier `requirements.txt` :
 
-```bash
-pip install -r requirements.txt
-```
 ## Installation
 
 1. **Clone ce repository sur ta machine** :
