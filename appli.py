@@ -1,14 +1,14 @@
 import customtkinter as ctk
-from PIL import Image
 import psutil
 
-from attaquexss import show_xss_page
-from apropos import show_about_page
-from parametres import show_settings_page
+from PIL import Image
 from injectionsql import show_sql_page
+from attaquexss import show_xss_page
 from scanner_api import show_api_scanner_page
 from access_control import show_access_control_page
 from general_scanner import show_general_scanner_page
+from apropos import show_about_page
+from parametres import show_settings_page
 
 # Fonction pour quitter l'application
 def quit_application():
@@ -27,22 +27,26 @@ def update_system_info(label):
     label.after(1000, update_system_info, label)
 
 # Fonction pour aller à une page spécifique
-def go_to_page(current_window, page):
-    current_window.destroy()
+def go_to_page(current_window, page, container):
+    # Effacer le contenu du conteneur avant de charger la nouvelle page
+    for widget in container.winfo_children():
+        widget.destroy()
+
+    # Afficher la page correspondante dans le conteneur
     if page == "sql":
-        show_sql_page(main_menu)
+        show_sql_page(container)
     elif page == "xss":
-        show_xss_page(main_menu)
+        show_xss_page(container)
     elif page == "api_scanner":
-        show_api_scanner_page(main_menu)
+        show_api_scanner_page(container)
     elif page == "access_control":
-        show_access_control_page(main_menu)
+        show_access_control_page(container)
     elif page == "general_scanner":
-        show_general_scanner_page(main_menu)
+        show_general_scanner_page(container)
     elif page == "apropos":
-        show_about_page(main_menu)
+        show_about_page(container)
     elif page == "parametres":
-        show_settings_page(main_menu)
+        show_settings_page(container)
 
 # Fonction principale
 def main_menu():
@@ -71,15 +75,15 @@ def main_menu():
     content_frame = ctk.CTkFrame(root, fg_color="#1e1e1e")
     content_frame.pack(expand=True, fill="both", padx=20, pady=20)
 
-    # Cartes avec boutons
+    # Cartes avec éléments cliquables
     features = [
-        ("Injection SQL", "image/sqlinjection.png", lambda: go_to_page(root, "sql")),
-        ("Attaque XSS", "image/attaquexss.png", lambda: go_to_page(root, "xss")),
-        ("Scanner API", "image/api_scanner.png", lambda: go_to_page(root, "api_scanner")),
-        ("Contrôle des Autorisations", "image/access_control.png", lambda: go_to_page(root, "access_control")),
-        ("Scanner Général", "image/general_scanner.png", lambda: go_to_page(root, "general_scanner")),
-        ("Paramètres", "image/settings.png", lambda: go_to_page(root, "parametres")),
-        ("À Propos", "image/about.png", lambda: go_to_page(root, "apropos")),
+        ("Injection SQL", "image/sqlinjection.png", lambda: go_to_page(root, "sql", content_frame)),
+        ("Attaque XSS", "image/attaquexss.png", lambda: go_to_page(root, "xss", content_frame)),
+        ("Scanner API", "image/api_scanner.png", lambda: go_to_page(root, "api_scanner", content_frame)),
+        ("Contrôle des Autorisations", "image/access_control.png", lambda: go_to_page(root, "access_control", content_frame)),
+        ("Scanner Général", "image/general_scanner.png", lambda: go_to_page(root, "general_scanner", content_frame)),
+        ("Paramètres", "image/settings.png", lambda: go_to_page(root, "parametres", content_frame)),
+        ("À Propos", "image/about.png", lambda: go_to_page(root, "apropos", content_frame)),
     ]
 
     for idx, (title, icon, command) in enumerate(features):
@@ -88,15 +92,10 @@ def main_menu():
 
         card_image = Image.open(icon).resize((50, 50))
         card_image_ctk = ctk.CTkImage(card_image, size=(50, 50))
-        card_label = ctk.CTkLabel(card, image=card_image_ctk, text="", fg_color="#2e2e2e")
+        card_label = ctk.CTkLabel(card, image=card_image_ctk, text=title, fg_color="#2e2e2e", text_color="white", font=("Helvetica", 16))
         card_label.pack(pady=10)
 
-        card_button = ctk.CTkButton(
-            card, text=title, fg_color="#4CAF50", hover_color="#45a049",
-            text_color="black", font=("Helvetica", 16), command=command,
-            corner_radius=10, width=200, height=40
-        )
-        card_button.pack(pady=10)
+        card_label.bind("<Button-1>", lambda event, command=command: command())  # Ajouter un événement de clic sur le label
 
     # Bouton "Quitter"
     quit_button = ctk.CTkButton(

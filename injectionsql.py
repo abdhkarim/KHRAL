@@ -1,8 +1,8 @@
-import tkinter as tk
+import customtkinter as ctk
+from tkinter import Text
 import requests
 import json
 from datetime import datetime
-import customtkinter as ctk
 from PIL import Image, ImageTk
 import webbrowser
 
@@ -34,34 +34,25 @@ def save_vulnerability(data, file_path="vulnerabilities.json"):
         json.dump(vulnerabilities, file, ensure_ascii=False, indent=4)
 
 
-def load_vulnerabilities(file_path="vulnerabilities.json"):
-    """Charge les vulnérabilités enregistrées depuis un fichier JSON."""
-    try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            return json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return []
-
-
 def test_sql_injection(url, results_text, vuln_list):
     """Teste les injections SQL et sauvegarde les vulnérabilités détectées."""
     payloads = load_payloads("payloads/payloadSQL.json")
 
     if not payloads:
-        results_text.insert(tk.END, "Aucun payload disponible.\n")
+        results_text.insert("end", "Aucun payload disponible.\n")
         return
 
     successful_tests = []  # Liste des tests réussis
 
     # Effacer l'ancien contenu
-    results_text.delete("1.0", tk.END)
+    results_text.delete("1.0", "end")
 
     for payload_data in payloads:
         payload = payload_data["payload"]
         description = payload_data["description"]
 
         test_url = f"{url}{payload}"
-        results_text.insert(tk.END, f"[+] Test avec {description}...\n")
+        results_text.insert("end", f"[+] Test avec {description}...\n")
 
         try:
             response = requests.get(test_url)
@@ -77,84 +68,59 @@ def test_sql_injection(url, results_text, vuln_list):
                 save_vulnerability(vulnerability)
 
                 # Mettre à jour la liste des vulnérabilités dans l'interface
-                vuln_list.insert(tk.END, f"{vulnerability['time']} - {vulnerability['description']}\n")
+                vuln_list.insert("end", f"{vulnerability['time']} - {vulnerability['description']}\n")
 
                 successful_tests.append(description)
         except Exception as e:
-            results_text.insert(tk.END, f"Erreur lors de la requête : {e}\n")
+            results_text.insert("end", f"Erreur lors de la requête : {e}\n")
 
     if successful_tests:
-        results_text.insert(tk.END, f"{len(successful_tests)} vulnérabilité(s) détectée(s).\n")
+        results_text.insert("end", f"{len(successful_tests)} vulnérabilité(s) détectée(s).\n")
     else:
-        results_text.insert(tk.END, "Aucune vulnérabilité détectée.\n")
+        results_text.insert("end", "Aucune vulnérabilité détectée.\n")
 
 
-def show_sql_page(back_to_menu=None):
-    """Affiche la page de test d'injections SQL avec un label Documentation fixe tout à droite."""
-    sql_window = tk.Tk()
-    sql_window.title("KHRAL - Injection SQL")
-
-    # Taille et positionnement de la fenêtre
-    sql_window.geometry("1200x800")
-    sql_window.config(bg="#2e2e2e")
+def show_sql_page(container):
+    """Affiche la page Injection SQL dans le conteneur donné."""
+    # Effacer le contenu existant dans le conteneur
+    for widget in container.winfo_children():
+        widget.destroy()
 
     # Colonne pour l'historique
-    vuln_list_frame = tk.Frame(sql_window, bg="#1e1e1e", width=300)
-    vuln_list_frame.pack(side="left", fill="y")
+    vuln_list_frame = ctk.CTkFrame(container, fg_color="#1e1e1e", width=300)
+    vuln_list_frame.pack(side="left", fill="y", padx=10, pady=10)
 
-    vuln_list_label = tk.Label(vuln_list_frame, text="Historique des vulnérabilités", bg="#1e1e1e", fg="white", font=("Helvetica", 16))
+    vuln_list_label = ctk.CTkLabel(vuln_list_frame, text="Historique des vulnérabilités", text_color="white", font=("Helvetica", 16))
     vuln_list_label.pack(pady=10)
 
-    vuln_list = tk.Listbox(vuln_list_frame, bg="#2e2e2e", fg="white", font=("Helvetica", 14))
+    vuln_list = ctk.CTkTextbox(vuln_list_frame, fg_color="#2e2e2e", text_color="white", font=("Helvetica", 14), wrap="none")
     vuln_list.pack(fill="both", expand=True)
 
     # Zone principale
-    main_frame = tk.Frame(sql_window, bg="#2e2e2e")
-    main_frame.pack(side="right", fill="both", expand=True)
+    main_frame = ctk.CTkFrame(container, fg_color="#2e2e2e")
+    main_frame.pack(side="right", fill="both", expand=True, padx=10, pady=10)
 
     # Barre pour entrer l'URL
-    url_frame = tk.Frame(main_frame, bg="#2e2e2e")
+    url_frame = ctk.CTkFrame(main_frame, fg_color="#2e2e2e")
     url_frame.pack(pady=5, padx=20, anchor="n", fill="x")
 
-    url_label = tk.Label(url_frame, text="Entrez l'URL :", bg="#2e2e2e", fg="white", font=("Helvetica", 14))
+    url_label = ctk.CTkLabel(url_frame, text="Entrez l'URL :", text_color="white", font=("Helvetica", 14))
     url_label.pack(side="left", padx=5)
 
-    url_entry = tk.Entry(url_frame, font=("Helvetica", 14), width=80)
+    url_entry = ctk.CTkEntry(url_frame, font=("Helvetica", 14), width=400)
     url_entry.pack(side="left", padx=5, fill="x", expand=True)
 
     # Documentation Label fixe tout à droite
     def open_documentation():
         webbrowser.open("https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection")
 
-    try:
-        # Charger l'image
-        doc_image = Image.open("images/documentation.png")
-        doc_image = doc_image.resize((20, 20), Image.ANTIALIAS)
-        doc_image_tk = ImageTk.PhotoImage(doc_image)
-    except Exception as e:
-        print(f"Erreur lors du chargement de l'image : {e}")
-        doc_image_tk = None
-
-    doc_label_frame = tk.Frame(sql_window, bg="#2e2e2e")
-    doc_label_frame.pack(side="top", anchor="ne", padx=20, pady=10)
-
-    doc_label = tk.Label(doc_label_frame, text=" Documentation", image=doc_image_tk, compound="left", fg="#4CAF50",
-                         bg="#2e2e2e", cursor="hand2", font=("Helvetica", 14))
-    doc_label.image = doc_image_tk  # Référencer l'image pour éviter le garbage collection
-    doc_label.pack(side="right")
-    doc_label.bind("<Button-1>", lambda e: open_documentation())
+    doc_button = ctk.CTkButton(main_frame, text="Documentation", command=open_documentation, width=150, height=40)
+    doc_button.pack(pady=10)
 
     # Zone de résultats
-    results_text = tk.Text(main_frame, bg="#1e1e1e", fg="white", font=("Helvetica", 14), height=20)
+    results_text = ctk.CTkTextbox(main_frame, fg_color="#1e1e1e", text_color="white", font=("Helvetica", 14), height=20, wrap="word")
     results_text.pack(pady=10, padx=20, fill="both", expand=True)
 
     # Bouton pour lancer le test
-    test_button = ctk.CTkButton(main_frame, text="Tester", command=lambda: print("Test en cours..."))  # Ajoutez votre fonction ici
+    test_button = ctk.CTkButton(main_frame, text="Tester", command=lambda: test_sql_injection(url_entry.get(), results_text, vuln_list))
     test_button.pack(pady=10)
-
-    # Bouton de retour au menu principal
-    if back_to_menu:
-        back_button = ctk.CTkButton(main_frame, text="Retour", command=lambda: [sql_window.destroy(), back_to_menu()])
-        back_button.pack(pady=10)
-
-    sql_window.mainloop()
