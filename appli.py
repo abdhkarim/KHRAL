@@ -124,7 +124,7 @@ def main_menu():
         ("Contrôle des Autorisations", lambda: navigate_to_page(content_frame, show_access_control_page)),
         ("Scanner Général", lambda: navigate_to_page(content_frame, show_general_scanner_page)),
         ("À Propos", lambda: navigate_to_page(content_frame, show_about_page)),
-        ("Paramètres", lambda: navigate_to_page(content_frame, show_settings)),
+        ("Paramètres", lambda: navigate_to_page(content_frame, show_settings_page)),
     ]
 
     # Ajout des boutons pour les fonctionnalités dans le menu latéral
@@ -163,8 +163,3 @@ def main_menu():
 
 if __name__ == "__main__":
     main_menu()
-
-
-
-def functuion_choiice(test_sql_injection)
-    
