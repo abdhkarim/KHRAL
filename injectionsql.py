@@ -2,9 +2,11 @@ import customtkinter as ctk
 from tkinter import Text
 import requests
 import json
+import urllib.parse
+import webbrowser
 from datetime import datetime
 from PIL import Image, ImageTk
-import webbrowser
+from shared import navigate_to_page
 
 
 def load_payloads(file_path):
@@ -34,6 +36,11 @@ def save_vulnerability(data, file_path="vulnerabilities.json"):
         json.dump(vulnerabilities, file, ensure_ascii=False, indent=4)
 
 
+def encode_sql_payload(payload):
+    """Encode les caractères spéciaux dans un payload SQL."""
+    return urllib.parse.quote(payload)
+
+
 def test_sql_injection(url, results_text, vuln_list):
     """Teste les injections SQL et sauvegarde les vulnérabilités détectées."""
     payloads = load_payloads("payloads/payloadSQL.json")
@@ -51,7 +58,11 @@ def test_sql_injection(url, results_text, vuln_list):
         payload = payload_data["payload"]
         description = payload_data["description"]
 
-        test_url = f"{url}{payload}"
+        # Encoder le payload
+        encoded_payload = encode_sql_payload(payload)
+
+        # Construire l'URL avec le payload encodé
+        test_url = f"{url}{encoded_payload}"
         results_text.insert("end", f"[+] Test avec {description}...\n")
 
         try:
@@ -62,6 +73,7 @@ def test_sql_injection(url, results_text, vuln_list):
                 vulnerability = {
                     "url": url,
                     "payload": payload,
+                    "encoded_payload": encoded_payload,
                     "description": description,
                     "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 }
@@ -93,7 +105,7 @@ def show_sql_page(container):
     vuln_list_label = ctk.CTkLabel(vuln_list_frame, text="Historique des vulnérabilités", text_color="white", font=("Helvetica", 16))
     vuln_list_label.pack(pady=10)
 
-    vuln_list = ctk.CTkTextbox(vuln_list_frame, fg_color="#2e2e2e", text_color="white", font=("Helvetica", 14), wrap="none")
+    vuln_list = ctk.CTkTextbox(vuln_list_frame, fg_color="#2e2e2e", text_color="white", font=("Helvetica", 14), wrap="none", state="disabled")
     vuln_list.pack(fill="both", expand=True)
 
     # Zone principale
@@ -110,17 +122,45 @@ def show_sql_page(container):
     url_entry = ctk.CTkEntry(url_frame, font=("Helvetica", 14), width=400)
     url_entry.pack(side="left", padx=5, fill="x", expand=True)
 
-    # Documentation Label fixe tout à droite
+    # Zone de résultats
+    results_text = ctk.CTkTextbox(main_frame, fg_color="#1e1e1e", text_color="white", font=("Helvetica", 14), height=20, wrap="word", state="disabled")
+    results_text.pack(pady=10, padx=20, fill="both", expand=True)
+
+    # Boutons en bas
+    bottom_frame = ctk.CTkFrame(main_frame, fg_color="#2e2e2e")
+    bottom_frame.pack(side="bottom", fill="x", pady=10, padx=20)
+
+    # Documentation bouton
     def open_documentation():
         webbrowser.open("https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection")
 
-    doc_button = ctk.CTkButton(main_frame, text="Documentation", command=open_documentation, width=150, height=40)
-    doc_button.pack(pady=10)
-
-    # Zone de résultats
-    results_text = ctk.CTkTextbox(main_frame, fg_color="#1e1e1e", text_color="white", font=("Helvetica", 14), height=20, wrap="word")
-    results_text.pack(pady=10, padx=20, fill="both", expand=True)
+    doc_button = ctk.CTkButton(bottom_frame, text="Documentation", command=open_documentation, width=150, height=40)
+    doc_button.pack(side="left", padx=5)
 
     # Bouton pour lancer le test
-    test_button = ctk.CTkButton(main_frame, text="Tester", command=lambda: test_sql_injection(url_entry.get(), results_text, vuln_list))
-    test_button.pack(pady=10)
+    test_button = ctk.CTkButton(
+        bottom_frame,
+        text="Tester",
+        command=lambda: test_sql_injection(url_entry.get(), results_text, vuln_list),
+        fg_color="#4CAF50",  # Vert
+        hover_color="#388E3C",  # Vert plus foncé au survol
+        text_color="white",
+        corner_radius=10,
+        font=("Helvetica", 16),
+        height=40
+    )
+    test_button.pack(side="right", padx=5)
+
+    # Bouton "Retour à l'accueil"
+    back_button = ctk.CTkButton(
+        main_frame,
+        text="Retour à l'accueil",
+        command=lambda: navigate_to_page(container, show_default_page),
+        fg_color="#D32F2F",
+        hover_color="#C62828",
+        text_color="white",
+        corner_radius=10,
+        font=("Helvetica", 16),
+        height=40
+    )
+    back_button.pack(side="top", pady=20, padx=20)

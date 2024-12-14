@@ -62,3 +62,32 @@ def show_settings_page(return_to_menu):
     back_button.grid(row=5, column=0, columnspan=2, pady=20)
 
     settings_window.mainloop()
+
+
+"""
+def show_settings(content_frame):
+    Affiche la page des paramètres.
+    for widget in content_frame.winfo_children():
+        widget.destroy()
+
+    settings_label = ctk.CTkLabel(
+        content_frame,
+        text="Page des paramètres",
+        font=("Helvetica", 24, "bold"),
+        text_color="white",
+    )
+    settings_label.pack(pady=20)
+
+    back_button = ctk.CTkButton(
+        content_frame,
+        text="Retour à l'accueil",
+        command=lambda: navigate_to_page(content_frame, show_default_page),
+        fg_color="#2e2e2e",
+        hover_color="#3e3e3e",
+        corner_radius=10,
+        font=("Helvetica", 16),
+        height=40
+    )
+    back_button.pack(pady=10)
+
+"""
