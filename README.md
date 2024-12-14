@@ -89,6 +89,3 @@ git push origin feature/nom_de_fonctionnalité
 - [OWASP Top 10](https://owasp.org/Top10/fr/)
 - [MITRE ATT&CK](https://attack.mitre.org/)
 - [NIST CVE](https://nvd.nist.gov/vuln)
-## Licence
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus d'informations
-Ce projet est sous licence [MIT](https://opensource.org/licenses/MIT). Voir le fichier `LICENSE` pour plus d'informations.
