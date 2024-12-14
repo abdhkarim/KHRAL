@@ -42,34 +42,48 @@ def encode_sql_payload(payload):
 
 
 def test_sql_injection(url, results_text, vuln_list):
-    """Teste les injections SQL et sauvegarde les vulnérabilités détectées."""
+    """
+    Teste les injections SQL sur une URL en utilisant des payloads.
+    Affiche les résultats dans l'interface graphique.
+    """
+    # Charger les payloads depuis le fichier JSON
     payloads = load_payloads("payloads/payloadSQL.json")
 
+    # Vérifier si des payloads sont disponibles
     if not payloads:
-        results_text.insert("end", "Aucun payload disponible.\n")
+        results_text.configure(state="normal")
+        results_text.insert("end", "[!] Aucun payload disponible. Vérifiez le fichier payloadSQL.json.\n")
+        results_text.configure(state="disabled")
         return
 
-    successful_tests = []  # Liste des tests réussis
+    # Préparer l'interface pour afficher les résultats
+    results_text.configure(state="normal")
+    results_text.delete("1.0", "end")  # Vider la zone de texte pour un nouveau test
 
-    # Effacer l'ancien contenu
-    results_text.delete("1.0", "end")
+    # Liste pour enregistrer les vulnérabilités détectées
+    successful_tests = []
 
     for payload_data in payloads:
         payload = payload_data["payload"]
         description = payload_data["description"]
 
-        # Encoder le payload
+        # Encoder le payload et construire l'URL de test
         encoded_payload = encode_sql_payload(payload)
-
-        # Construire l'URL avec le payload encodé
         test_url = f"{url}{encoded_payload}"
-        results_text.insert("end", f"[+] Test avec {description}...\n")
+
+        results_text.insert("end", f"[+] Test avec payload : {description}\n")
 
         try:
-            response = requests.get(test_url)
+            # Envoyer la requête GET à l'URL de test
+            response = requests.get(test_url, timeout=5)
 
-            if any(err in response.text.lower() for err in ["sql syntax", "mysql", "syntax error"]):
-                # Enregistre les vulnérabilités
+            # Analyser la réponse pour détecter des erreurs SQL communes
+            if response.status_code == 200 and any(
+                keyword in response.text.lower() for keyword in ["sql syntax", "mysql", "syntax error"]
+            ):
+                results_text.insert("end", f"[!] Vulnérabilité détectée : {description}\n")
+
+                # Ajouter la vulnérabilité à l'historique
                 vulnerability = {
                     "url": url,
                     "payload": payload,
@@ -79,17 +93,27 @@ def test_sql_injection(url, results_text, vuln_list):
                 }
                 save_vulnerability(vulnerability)
 
-                # Mettre à jour la liste des vulnérabilités dans l'interface
+                # Mettre à jour la liste dans l'interface
+                vuln_list.configure(state="normal")
                 vuln_list.insert("end", f"{vulnerability['time']} - {vulnerability['description']}\n")
+                vuln_list.configure(state="disabled")
 
                 successful_tests.append(description)
-        except Exception as e:
-            results_text.insert("end", f"Erreur lors de la requête : {e}\n")
+            else:
+                results_text.insert("end", "[-] Pas de vulnérabilité détectée.\n")
 
+        except requests.exceptions.RequestException as e:
+            # Afficher les erreurs réseau ou autres
+            results_text.insert("end", f"[!] Erreur lors du test : {str(e)}\n")
+
+    # Afficher un résumé des résultats
     if successful_tests:
-        results_text.insert("end", f"{len(successful_tests)} vulnérabilité(s) détectée(s).\n")
+        results_text.insert("end", f"\n[+] {len(successful_tests)} vulnérabilité(s) détectée(s).\n")
     else:
-        results_text.insert("end", "Aucune vulnérabilité détectée.\n")
+        results_text.insert("end", "\n[-] Aucune vulnérabilité détectée.\n")
+
+    # Désactiver la zone de texte pour empêcher les modifications
+    results_text.configure(state="disabled")
 
 
 def show_sql_page(container):
