@@ -5,7 +5,7 @@ from shared import navigate_to_page
 from injectionsql import show_sql_page
 from attaquexss import show_xss_page
 from scanner_api import show_api_scanner_page
-from access_control import show_access_control_page
+from src.access_control import show_access_control_page
 from general_scanner import show_general_scanner_page
 from apropos import show_about_page
 from parametres import show_settings_page
@@ -99,7 +99,7 @@ def main_menu():
     top_frame.pack(fill="x", side="top")
 
     # Logo
-    logo_image = Image.open("image/kh-logo.png").resize((50, 50))
+    logo_image = Image.open("../assets/kh-logo.png").resize((50, 50))
     logo_ctk = ctk.CTkImage(logo_image, size=(50, 50))
     logo_label = ctk.CTkLabel(top_frame, text="", image=logo_ctk)
     logo_label.pack(side="left", padx=20, pady=5)
