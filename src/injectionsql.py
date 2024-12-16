@@ -79,12 +79,12 @@ def display_injection_choices(results_text, vuln_list, choice_entry, test_button
 
     # Définir le fichier JSON des payloads en fonction du type d'injection choisi
     payload_files = {
-        1: "payloads/SQLInj/inband_sql.json",
-        2: "payloads/SQLInj/error_based.json",
-        3: "payloads/SQLInj/time_based_sql.json",
-        4: "payloads/SQLInj/union_based_sql.json",
-        5: "payloads/SQLInj/authbypass.json"
-    }
+    1: "src/payloads/SQLInj/inband_sql.json",
+    2: "src/payloads/SQLInj/error_based.json",
+    3: "src/payloads/SQLInj/time_based_sql.json",
+    4: "src/payloads/SQLInj/union_based_sql.json",
+    5: "src/payloads/SQLInj/authbypass.json",
+}
 
     payload_file = payload_files.get(choice)
     if not payload_file:
