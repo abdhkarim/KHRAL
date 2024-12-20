@@ -1,4 +1,4 @@
-# KHRAL - Outils de tests de vulnérabilités web
+# KHRAL - Outils de tests de vulnérabilités web OPENSource
 
 ### Description du projet
 
