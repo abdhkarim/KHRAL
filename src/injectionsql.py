@@ -47,9 +47,8 @@ def encode_sql_payload(payload):
 def display_injection_choices(results_text, vuln_list, choice_entry, test_button, url, db_type):
     """Affiche les résultats dans la fenêtre des résultats (results_text), sans modifier l'historique des vulnérabilités."""
     
-    # Effacer le texte "[INFO] En attente des résultats..."
     results_text.configure(state="normal")
-    results_text.delete("1.0", "end")  # Vider la zone de texte des anciens résultats
+    results_text.delete("1.0", "end")
 
     # Liste des types d'injection avec leurs descriptions
     injection_types = {
@@ -173,7 +172,7 @@ def display_vulnerability_history(vuln_list):
 
     vuln_list.configure(state="disabled")
 
-# À chaque fois que l'utilisateur entre son choix, effacer "[INFO] En attente des résultats..."
+
 def show_sql_page(container):
     """Affiche la page Injection SQL dans le conteneur donné."""
     # Effacer le contenu existant dans le conteneur
@@ -286,5 +285,8 @@ def show_sql_page(container):
         height=40,
     )
     test_button.pack(side="right", padx=5)
+
+
+
 
 

@@ -48,7 +48,7 @@ def show_settings_page(return_to_menu):
         font_label.configure(font=new_font)
 
     # Option 3 : À propos
-    about_image = Image.open("image/about.png").resize((30, 30))  # Redimensionner l'image
+    about_image = Image.open("assets/about.png").resize((30, 30))  # Redimensionner l'image
     about_ctk_image = ctk.CTkImage(about_image, size=(30, 30))
 
     about_label = ctk.CTkButton(settings_window, text="À propos", image=about_ctk_image, compound="left", 
