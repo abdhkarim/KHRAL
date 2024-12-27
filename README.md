@@ -86,6 +86,7 @@ git push origin feature/nom_de_fonctionnalité
 - Karim ABDALLAH - @abdhkarim
 - LAZHARI Haroun-Rachid @CambouiMan
 ## Liens utiles
+- [OWASP WSTG](https://owasp.org/www-project-web-security-testing-guide/v42/)
 - [OWASP Top 10](https://owasp.org/Top10/fr/)
 - [MITRE ATT&CK](https://attack.mitre.org/)
 - [NIST CVE](https://nvd.nist.gov/vuln)
