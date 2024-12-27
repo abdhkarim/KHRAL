@@ -8,7 +8,7 @@ Le projet regroupe plusieurs outils permettant d'identifier et d'exploiter des v
 
 ### Objectifs
 
-- Développer des outils de test pour les vulnérabilités OWASP telles que l'injection SQL, XSS, etc.
+- Développer des outils de test pour les vulnérabilités OWASP telles que l'injection SQL, XSS, Broken Access Control.
 - Créer une interface utilisateur moderne pour naviguer entre les outils de test.
 - Fournir une documentation pour permettre l'extension et la compréhension du fonctionnement des outils de pentesting.
 
