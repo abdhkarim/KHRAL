@@ -84,7 +84,7 @@ git push origin feature/nom_de_fonctionnalité
 5. **Ouvre une Pull Request sur le repository principal.**
 ## Auteurs
 - Karim ABDALLAH - @abdhkarim
-- LAZHARI Haroun-Rachid @CambouiMan
+
 ## Liens utiles
 - [OWASP WSTG](https://owasp.org/www-project-web-security-testing-guide/v42/)
 - [OWASP Top 10](https://owasp.org/Top10/fr/)
