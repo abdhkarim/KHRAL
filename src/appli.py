@@ -7,11 +7,12 @@ import os
 from shared import navigate_to_page
 from injectionsql import show_sql_page
 from attaquexss import show_xss_page
-from scanner_api import show_api_scanner_page
 from access_control import show_access_control_page
 from general_scanner import show_nmap_page
-from apropos import show_about_page
 from parametres import show_settings_page
+from crypto_tests import show_crypto_tests_page
+from bruteforce import show_brute_force_page
+from apropos import show_about_page
 
 
 def quit_application():
@@ -84,7 +85,7 @@ def main_menu():
     """Affiche le menu principal avec navigation persistante."""
     global root
     root = ctk.CTk()
-    root.title("KHRAL - Menu Principal")
+    root.title("KHRAL")
 
     # Dimensions de la fenêtre
     window_width, window_height = 1200, 800
@@ -120,13 +121,13 @@ def main_menu():
 
     # Fonctionnalités principales
     features = [
-        ("Injection SQL", lambda: navigate_to_page(content_frame, show_sql_page)),
-        ("Attaque XSS", lambda: navigate_to_page(content_frame, show_xss_page)),
-        ("Scanner API", lambda: navigate_to_page(content_frame, show_api_scanner_page)),
-        ("Contrôle des Autorisations", lambda: navigate_to_page(content_frame, show_access_control_page)),
-        ("Scanner des ports", lambda: navigate_to_page(content_frame, show_nmap_page)),
-        ("À Propos", lambda: navigate_to_page(content_frame, show_about_page)),
-        ("Paramètres", lambda: navigate_to_page(content_frame, show_settings_page)),
+    ("Injection SQL", lambda: navigate_to_page(content_frame, show_sql_page)),
+    ("Attaque XSS", lambda: navigate_to_page(content_frame, show_xss_page)),
+    ("Contrôle des Autorisations", lambda: navigate_to_page(content_frame, show_access_control_page)),
+    ("Attaque Brute Force", lambda: navigate_to_page(content_frame, show_brute_force_page)),
+    ("Scanner des ports", lambda: navigate_to_page(content_frame, show_nmap_page)),
+    ("Tests Cryptographiques", lambda: navigate_to_page(content_frame, show_crypto_tests_page)),
+    ("Paramètres", lambda: navigate_to_page(content_frame, show_settings_page)),
     ]
 
     # Ajout des boutons dans le menu latéral

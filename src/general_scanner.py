@@ -26,9 +26,7 @@ def validate_port_range(port_range):
         return False
 
 def start_nmap_scan(target, port_range, results_text, scan_button):
-    """
-    Lance un scan de type Nmap après avoir validé les entrées.
-    """
+    """ Lance un scan de type Nmap après avoir validé les entrées. """
     results_text.delete("1.0", "end")
 
     # Valider la cible

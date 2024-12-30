@@ -2,43 +2,35 @@ import customtkinter as ctk
 from PIL import Image
 from apropos import show_about_page
 
-def show_settings_page(return_to_menu):
-    # Initialisation de la fenêtre
-    settings_window = ctk.CTk()
-    settings_window.title("Paramètres")
+def show_settings_page(container):
+    """Affiche la page des paramètres dans le conteneur donné."""
+    # Effacer le contenu existant dans le conteneur
+    for widget in container.winfo_children():
+        widget.destroy()
 
-    # Dimensions de la fenêtre
-    window_width, window_height = 500, 400
-    screen_width, screen_height = settings_window.winfo_screenwidth(), settings_window.winfo_screenheight()
-    x_position, y_position = (screen_width // 2) - (window_width // 2), (screen_height // 2) - (window_height // 2)
-    settings_window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+    # Colonne pour les options
+    settings_frame = ctk.CTkFrame(container, fg_color="#1e1e1e", width=300)
+    settings_frame.pack(side="left", fill="y", padx=10, pady=10)
 
-    # Couleur de fond
-    settings_window.config(bg="#2e2e2e")
+    # Titre de la page des paramètres
+    title_label = ctk.CTkLabel(settings_frame, text="Paramètres", text_color="white", font=("Helvetica", 24, "bold"))
+    title_label.pack(pady=20)
 
-    # Titre principal
-    title_label = ctk.CTkLabel(settings_window, text="Paramètres", font=("Helvetica", 24, "bold"), text_color="white")
-    title_label.grid(row=0, column=0, columnspan=2, pady=20)
+    # Section pour changer le thème (clair/sombre)
+    theme_label = ctk.CTkLabel(settings_frame, text="Changer le thème :", text_color="white", font=("Helvetica", 16))
+    theme_label.pack(pady=10)
 
-    # Ligne de séparation
-    separator = ctk.CTkFrame(settings_window, height=2, fg_color="#4CAF50")
-    separator.grid(row=1, column=0, columnspan=2, sticky="ew", padx=20, pady=10)
-
-    # Option 1 : Changer le thème (clair/sombre)
-    theme_label = ctk.CTkLabel(settings_window, text="Changer le thème :", font=("Helvetica", 16), text_color="white")
-    theme_label.grid(row=2, column=0, sticky="w", padx=20, pady=10)
-
-    theme_button = ctk.CTkSwitch(settings_window, text="Thème sombre", onvalue="dark", offvalue="light",
+    theme_button = ctk.CTkSwitch(settings_frame, text="Thème sombre", onvalue="dark", offvalue="light",
                                   command=lambda: ctk.set_appearance_mode("dark" if theme_button.get() == "dark" else "light"))
-    theme_button.grid(row=2, column=1, sticky="e", padx=20)
+    theme_button.pack(pady=10)
 
-    # Option 2 : Changer la taille de la police
-    font_label = ctk.CTkLabel(settings_window, text="Taille de la police :", font=("Helvetica", 16), text_color="white")
-    font_label.grid(row=3, column=0, sticky="w", padx=20, pady=10)
+    # Section pour changer la taille de la police
+    font_label = ctk.CTkLabel(settings_frame, text="Taille de la police :", text_color="white", font=("Helvetica", 16))
+    font_label.pack(pady=10)
 
-    font_size_slider = ctk.CTkSlider(settings_window, from_=12, to=24, command=lambda value: update_font_size(value))
-    font_size_slider.set(14)  # Taille par défaut
-    font_size_slider.grid(row=3, column=1, sticky="e", padx=20)
+    font_size_slider = ctk.CTkSlider(settings_frame, from_=12, to=24, command=lambda value: update_font_size(value))
+    font_size_slider.set(14)  # Taille de police par défaut
+    font_size_slider.pack(pady=10)
 
     # Fonction pour mettre à jour la taille de la police
     def update_font_size(size):
@@ -47,47 +39,28 @@ def show_settings_page(return_to_menu):
         theme_label.configure(font=new_font)
         font_label.configure(font=new_font)
 
-    # Option 3 : À propos
+    # Zone de documentation
+    documentation_label = ctk.CTkLabel(
+        settings_frame,
+        text="Documentation des Paramètres :\n\n"
+             "1. Changer le thème : Permet de basculer entre un thème clair et un thème sombre.\n"
+             "2. Taille de la police : Permet d'ajuster la taille de la police des éléments de l'interface.",
+        font=("Helvetica", 12),
+        text_color="lightgray",
+        anchor="w"
+    )
+    documentation_label.pack(pady=20)
+
+    # Bouton À propos
     about_image = Image.open("assets/about.png").resize((30, 30))  # Redimensionner l'image
     about_ctk_image = ctk.CTkImage(about_image, size=(30, 30))
 
-    about_label = ctk.CTkButton(settings_window, text="À propos", image=about_ctk_image, compound="left", 
-                                command=lambda: [settings_window.destroy(), show_about_page(return_to_menu)],
-                                fg_color="#4CAF50", text_color="white", hover_color="#45a049")
-    about_label.grid(row=4, column=0, columnspan=2, pady=20)
+    about_button = ctk.CTkButton(settings_frame, text="À propos", image=about_ctk_image, compound="left", 
+                                 command=lambda: [container.destroy(), show_about_page],
+                                 fg_color="#4CAF50", text_color="white", hover_color="#45a049")
+    about_button.pack(pady=20)
 
-    # Bouton retour
-    back_button = ctk.CTkButton(settings_window, text="Retour", command=lambda: [settings_window.destroy(), return_to_menu()],
-                                fg_color="#FF6347", text_color="white", hover_color="#FF4500")
-    back_button.grid(row=5, column=0, columnspan=2, pady=20)
-
-    settings_window.mainloop()
-
-
-"""
-def show_settings(content_frame):
-    Affiche la page des paramètres.
-    for widget in content_frame.winfo_children():
-        widget.destroy()
-
-    settings_label = ctk.CTkLabel(
-        content_frame,
-        text="Page des paramètres",
-        font=("Helvetica", 24, "bold"),
-        text_color="white",
-    )
-    settings_label.pack(pady=20)
-
-    back_button = ctk.CTkButton(
-        content_frame,
-        text="Retour à l'accueil",
-        command=lambda: navigate_to_page(content_frame, show_default_page),
-        fg_color="#2e2e2e",
-        hover_color="#3e3e3e",
-        corner_radius=10,
-        font=("Helvetica", 16),
-        height=40
-    )
-    back_button.pack(pady=10)
-
-"""
+    # Bouton de retour au menu principal
+    back_button = ctk.CTkButton(settings_frame, text="Retour", command=lambda: [container.destroy()],
+                                 fg_color="#FF6347", text_color="white", hover_color="#FF4500")
+    back_button.pack(pady=20)

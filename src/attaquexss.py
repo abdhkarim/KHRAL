@@ -38,7 +38,7 @@ def save_vulnerability(data, file_path="vulnerabilities.json"):
 
 def test_xss(url, results_text, vuln_list):
     """Teste les injections XSS et sauvegarde les vulnérabilités détectées."""
-    payloads = load_payloads("payloads/payloadXSS.json")
+    payloads = load_payloads("src/payloads/XSS/payloadXSS.json")
 
     if not payloads:
         results_text.configure(state="normal")
@@ -147,16 +147,3 @@ def show_xss_page(container):
     )
     test_button.pack(side="right", padx=5)
 
-    # Bouton "Retour à l'accueil"
-    back_button = ctk.CTkButton(
-        main_frame,
-        text="Retour à l'accueil",
-        command=lambda: navigate_to_page(container, show_default_page),
-        fg_color="#D32F2F",
-        hover_color="#C62828",
-        text_color="white",
-        corner_radius=10,
-        font=("Helvetica", 16),
-        height=40
-    )
-    back_button.pack(side="top", pady=20, padx=20)
