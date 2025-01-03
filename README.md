@@ -57,6 +57,16 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
    ```bash
    git clone https://github.com/votre-repo/KHRAL.git
    cd KHRAL
+   ```
+2.	**Installer les dépendances** :
+Assurez-vous que Python est installé (version 3.8+). Ensuite, exécutez :
+   ```bash
+   pip install -r requirements.txt
+   ```
+3.	**Lancer l’application** :
+   ```bash
+   python main.py
+   ```
 
 ### Prérequis
 
