@@ -1,22 +1,62 @@
-# KHRAL - Outils de tests de vulnérabilités web 
+# **KHRAL - Outils de Tests de Vulnérabilités Web**
 
-### Description du projet
+KHRAL est un outil conçu pour détecter, tester et exploiter certaines des vulnérabilités web les plus courantes, en se basant sur les directives du **Top 10 OWASP**. Ce projet vise à fournir aux utilisateurs des outils personnalisés pour les tests d'intrusion, tout en offrant une meilleure compréhension des méthodologies de pentesting.
 
-**KHRAL** est un logiciel destiné à tester et exploiter certaines vulnérabilités web courantes telles que l'**injection SQL**, les **attaques XSS** (Cross-Site Scripting), et d'autres vulnérabilités mentionnées dans le **Top 10 de l'OWASP**. Ce projet a pour but de créer des outils permettant de tester ces vulnérabilités de manière personnalisée, tout en comprenant le fonctionnement des tests de pénétration. Les outils créés seront utilisés dans des tests d'intrusion (pentesting) pour identifier des failles de sécurité dans les applications web.
+Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identifier les failles de sécurité présentes dans leurs applications web et améliorer la robustesse de leur code face aux attaques.
 
-Le projet regroupe plusieurs outils permettant d'identifier et d'exploiter des vulnérabilités communes dans les applications web, tout en permettant aux utilisateurs de mieux comprendre comment ces outils fonctionnent en coulisses.
+---
 
-### Objectifs
+## **Fonctionnalités**
 
-- Développer des outils de test pour les vulnérabilités OWASP telles que l'injection SQL, XSS, Broken Access Control.
-- Créer une interface utilisateur moderne pour naviguer entre les outils de test.
-- Fournir une documentation pour permettre l'extension et la compréhension du fonctionnement des outils de pentesting.
+### 🔍 Tests de vulnérabilités OWASP 
+1. **Injection SQL** : 
+   - Identifie les points vulnérables aux injections SQL en analysant les paramètres d'URL ou de requête.  
+   - Exploitation basique avec des chaînes SQL malveillantes.
 
-### Fonctionnalités principales
+2. **Cross-Site Scripting (XSS)** :
+   - Détecte les failles XSS dans les champs de saisie utilisateur et les paramètres d'URL.
+   - Teste automatiquement l'exécution de scripts JavaScript malveillants.
 
-- **Test d'injection SQL** : Teste la vulnérabilité d'un site aux injections SQL via des paramètres d'URL.
-- **Test d'attaque XSS** : Vérifie la présence de vulnérabilités XSS dans une application web.
-- **Interface graphique moderne** : Une interface graphique simple et moderne permettant de naviguer entre les outils de tests.
+3. **Broken Access Control** *(En développement)* :
+   - Analyse les restrictions d'accès inadéquates ou contournées.
+   - Teste les autorisations manquantes ou mal configurées.
+
+4. **Scanner Réseau** *(En développement)* :
+   - Permet de cartographier les serveurs web et services actifs.
+   - Identifie les points d'entrée potentiels pour d'autres tests.
+
+---
+
+### 🖥️ Interface Graphique Moderne
+
+- **Navigation intuitive** : 
+  - Interface utilisateur ergonomique développée avec **CustomTkinter**, permettant une navigation fluide entre les outils.
+  - Possibilité de passer rapidement d'un test à un autre grâce à une interface modulaire et réactive.
+
+- **Visualisation des résultats** : 
+  - Retour clair des résultats des tests.
+  - Messages détaillés en cas de succès ou d'échec des attaques simulées.
+
+---
+
+## **Technologies Utilisées**
+
+- **Langage principal** : Python 3.x
+- **Framework UI** : [CustomTkinter](https://customtkinter.tomschimansky.com/)
+- **Bibliothèques complémentaires** :
+  - `requests` : Gestion des requêtes HTTP pour les tests d'attaques.
+  - `concurrent.futures` : Implémentation multithread pour accélérer les tests.
+  - `itertools` : Gestion des itérations et des données.
+- **Documentation** : Conforme aux standards OWASP et aux méthodologies de pentesting.
+
+---
+
+## **Installation**
+
+1. **Cloner le projet** :  
+   ```bash
+   git clone https://github.com/votre-repo/KHRAL.git
+   cd KHRAL
 
 ### Prérequis
 
