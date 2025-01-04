@@ -17,13 +17,13 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
    - Détecte les failles XSS dans les champs de saisie utilisateur et les paramètres d'URL.
    - Teste automatiquement l'exécution de scripts JavaScript malveillants.
 
-3. **Broken Access Control** *(En développement)* :
-   - Analyse les restrictions d'accès inadéquates ou contournées.
-   - Teste les autorisations manquantes ou mal configurées.
-
-4. **Scanner Réseau** *(En développement)* :
+3. **Scanner Réseau** *(En développement)* :
    - Permet de cartographier les serveurs web et services actifs.
    - Identifie les points d'entrée potentiels pour d'autres tests.
+
+4. **Broken Access Control** *(En développement)* :
+   - Analyse les restrictions d'accès inadéquates ou contournées.
+   - Teste les autorisations manquantes ou mal configurées.
   
 
 ---
