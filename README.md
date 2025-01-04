@@ -17,7 +17,7 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
    - Détecte les failles XSS dans les champs de saisie utilisateur et les paramètres d'URL.
    - Teste automatiquement l'exécution de scripts JavaScript malveillants.
 
-3. **Scanner Réseau** *(En développement)* :
+3. **Scanner Réseau** :
    - Permet de cartographier les serveurs web et services actifs.
    - Identifie les points d'entrée potentiels pour d'autres tests.
 
