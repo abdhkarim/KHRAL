@@ -116,7 +116,6 @@ git push origin feature/nom_de_fonctionnalité
 ### Objectifs à Court Terme
 
 - Finaliser l’outil de test pour le **Broken Access Control**.
-- Ajouter un module de **scan réseau** un peu plus performant.
 - Renforcer la documentation pour les **utilisateurs débutants**.
   
 ## Liens utiles
