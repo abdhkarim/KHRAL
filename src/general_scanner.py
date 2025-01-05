@@ -60,7 +60,6 @@ class NmapScannerApp:
 
         self.results_textbox = ctk.CTkTextbox(self.results_frame, fg_color="#1e1e1e", text_color="white", font=("Helvetica", 14), wrap="word")
         self.results_textbox.pack(fill="both", pady=10, padx=20, expand=True)
-        self.results_textbox.configure(state="disabled")  # Empêche l'utilisateur d'écrire
 
         # Zone du bouton
         self.button_frame = ctk.CTkFrame(self.main_frame, fg_color="#2e2e2e")
@@ -104,18 +103,14 @@ class NmapScannerApp:
 
         # Valider la cible
         if not self.validate_target(target):
-            self.results_textbox.configure(state="normal")
-            self.results_textbox.delete("1.0", "end")
-            self.results_textbox.insert("end", "[Erreur] Cible invalide. Veuillez entrer une adresse IP ou un nom d'hôte valide.\n")
-            self.results_textbox.configure(state="disabled")
+            self.update_results("[Erreur] Cible invalide. Veuillez entrer une adresse IP ou un nom d'hôte valide.\n")
+            print("[Erreur] Cible invalide.")
             return
 
         # Valider les ports
         if not self.validate_ports(start_port, end_port):
-            self.results_textbox.configure(state="normal")
-            self.results_textbox.delete("1.0", "end")
-            self.results_textbox.insert("end", "[Erreur] Plage de ports invalide. Assurez-vous que les ports sont entre 1 et 65535 et dans le bon format.\n")
-            self.results_textbox.configure(state="disabled")
+            self.update_results("[Erreur] Plage de ports invalide. Assurez-vous que les ports sont entre 1 et 65535 et dans le bon format.\n")
+            print("[Erreur] Plage de ports invalide.")
             return
 
         # Désactiver le bouton pendant le scan
@@ -127,67 +122,36 @@ class NmapScannerApp:
     def nmap_scan(self, target, start_port, end_port):
         """ Fonction principale pour effectuer un scan de ports avec nmap. """
         nm = nmap.PortScanner()
-
-        open_ports = []  # Liste des ports ouverts
-        filtered_ports = []  # Liste des ports filtrés
-        closed_ports = []  # Liste des ports fermés
+        results = []
 
         try:
-            # Afficher un message de début de scan dans l'interface graphique
-            self.container.after(0, self.update_results, f"Début du scan pour {target} sur les ports {start_port}-{end_port}...\n")
-            
-            # Effectuer le scan avec nmap
+            print(f"Début du scan pour {target} sur les ports {start_port}-{end_port}...")
             nm.scan(hosts=target, arguments=f'-p {start_port}-{end_port}')
 
-            # Récupérer les résultats du scan
             if nm.all_hosts():
                 for host in nm.all_hosts():
-                    open_ports_for_host = []
-                    filtered_ports_for_host = []
-                    closed_ports_for_host = []
-
                     for proto in nm[host].all_protocols():
                         lport = nm[host][proto].keys()
-                        lport = sorted(lport)
-
-                        for port in lport:
+                        for port in sorted(lport):
                             state = nm[host][proto][port]['state']
-                            if state == 'open':
-                                open_ports_for_host.append(port)
-                            elif state == 'filtered':
-                                filtered_ports_for_host.append(port)
-                            elif state == 'closed':
-                                closed_ports_for_host.append(port)
+                            results.append(f"Port {port} : {state.upper()}")
+                            print(f"Port {port} : {state.upper()}")
 
-                    open_ports.extend(open_ports_for_host)
-                    filtered_ports.extend(filtered_ports_for_host)
-                    closed_ports.extend(closed_ports_for_host)
-
-            # Afficher les résultats une fois le scan terminé
-            self.container.after(0, self.update_results, "\nScan terminé.\n")
-            self.container.after(0, self.update_results, f"Ports ouverts : {len(open_ports)}/{len(open_ports) + len(filtered_ports) + len(closed_ports)}\n")
-
-            if filtered_ports:
-                self.container.after(0, self.update_results, f"Ports filtrés : {len(filtered_ports)}\n")
-                for port in filtered_ports:
-                    self.container.after(0, self.update_results, f"\tPort : {port} State : filtered\n")
-            if open_ports:
-                for port in open_ports:
-                    self.container.after(0, self.update_results, f"\tPort : {port} State : open\n")
-            self.container.after(0, self.update_results, f"Ports fermés : {len(closed_ports)}\n")
-
+            if not results:
+                results.append("Aucun port ouvert trouvé.")
+            results.insert(0, "Scan terminé.\n")
         except Exception as e:
-            self.container.after(0, self.update_results, f"[Erreur] {str(e)}.\n")
+            results.append(f"[Erreur] {str(e)}")
+            print(f"[Erreur] {str(e)}")
 
-        # Réactiver le bouton "Scan" après le scan
+        # Mettre à jour les résultats dans la zone de texte
+        self.container.after(0, self.update_results, "\n".join(results))
         self.container.after(0, self.enable_scan_button)
 
     def update_results(self, message):
-        """ Met à jour le contenu du champ de texte avec un nouveau message. """
-        print("Mise à jour des résultats:", message)  # Ajouter un print pour déboguer
-        self.results_textbox.configure(state="normal")  # Permet de modifier le texte
-        self.results_textbox.insert("end", message)  # Ajoute le message à la fin
-        self.results_textbox.configure(state="disabled")  # Empêche l'utilisateur d'écrire
+        """ Met à jour la zone de texte avec un message final. """
+        self.results_textbox.delete("1.0", "end")  # Effacer le texte précédent
+        self.results_textbox.insert("end", message)  # Ajouter le nouveau message
 
     def enable_scan_button(self):
         """ Réactive le bouton de scan après la fin du scan. """

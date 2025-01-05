@@ -2,6 +2,9 @@ import os
 from cryptography.fernet import Fernet
 import customtkinter as ctk
 from tkinter import messagebox
+import hashlib
+import base64
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 def show_password_generator_page(container):
     """
@@ -52,23 +55,28 @@ def show_password_generator_page(container):
 
     # Fonction pour sauvegarder le mot de passe
     def save_password(password):
+        # Créer le dossier "passwords" dans le répertoire actuel
+        passwords_dir = os.path.join(os.getcwd(), "passwords")
+        if not os.path.exists(passwords_dir):
+            os.makedirs(passwords_dir)
+
         # Clé pour chiffrer le fichier
         key = Fernet.generate_key()
         cipher = Fernet(key)
         encrypted_password = cipher.encrypt(password.encode())
 
         # Chemin du fichier
-        file_path = os.path.expanduser("~/secure_passwords.txt")
+        file_path = os.path.join(passwords_dir, "secure_passwords.txt")
 
         # Sauvegarde du fichier chiffré
         with open(file_path, "wb") as file:
             file.write(encrypted_password)
 
         # Demande de mot de passe pour déchiffrer
-        decrypt_password_window(key)
+        decrypt_password_window(key, passwords_dir)
 
     # Fonction pour créer un mot de passe d'accès au fichier
-    def decrypt_password_window(key):
+    def decrypt_password_window(key, passwords_dir):
         window = ctk.CTkToplevel()
         window.geometry("400x300")
         window.title("Mot de passe pour fichier sécurisé")
@@ -78,11 +86,27 @@ def show_password_generator_page(container):
             if len(access_password) < 8:
                 messagebox.showwarning("Erreur", "Le mot de passe doit avoir au moins 8 caractères.")
                 return
-            # Sauvegarder la clé de chiffrement protégée par le mot de passe d'accès
-            with open(os.path.expanduser("~/encryption_key.txt"), "wb") as key_file:
-                key_file.write(key)
+
+            # Utiliser PBKDF2 pour dériver une clé de 32 octets à partir du mot de passe
+            salt = os.urandom(16)  # Sel aléatoire pour chaque mot de passe
+            kdf = PBKDF2HMAC(
+                algorithm=hashlib.sha256(),
+                length=32,
+                salt=salt,
+                iterations=100000,
+            )
+            access_key = base64.urlsafe_b64encode(kdf.derive(access_password.encode()))
+
+            # Chiffrer la clé de chiffrement avec la clé d'accès
+            fernet_access_key = Fernet(access_key)
+            encrypted_key = fernet_access_key.encrypt(key)
+
+            # Sauvegarder la clé chiffrée dans le dossier "passwords"
+            key_file_path = os.path.join(passwords_dir, "encryption_key.txt")
+            with open(key_file_path, "wb") as key_file:
+                key_file.write(encrypted_key)
             window.destroy()
-            messagebox.showinfo("Succès", "Le mot de passe a été sauvegardé dans un fichier sécurisé.")
+            messagebox.showinfo("Succès", "Le mot de passe a été sauvegardé dans le dossier 'passwords'.")
 
         # Widgets
         instruction = ctk.CTkLabel(window, text="Créez un mot de passe d'accès au fichier sécurisé :", font=("Helvetica", 14))

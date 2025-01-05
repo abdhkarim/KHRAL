@@ -134,7 +134,7 @@ class App:
         # Bouton interactif pour accéder à "À Propos"
         about_button = ctk.CTkButton(
             self.content_frame,
-            text="En savoir plus",
+            text="En savoir plus sur les vulnérabilités de l'OWASP Top 10",
             command=lambda: self.navigate_to_page(self.show_about_page),
             fg_color="#2e2e2e",
             hover_color="#3e3e3e",

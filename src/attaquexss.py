@@ -11,7 +11,7 @@ from shared import navigate_to_page
 class XSSApp:
     def __init__(self, container):
         self.container = container
-        self.payloads_file = "src/payloads/XSS/payloadXSS.json"
+        self.payloads_file = "src/payloads/XSS/payloadXSS.txt"  # Fichier texte pour les payloads
         self.vuln_file = "vulnerabilities.json"
         self.create_widgets()
 
@@ -75,15 +75,17 @@ class XSSApp:
         webbrowser.open("https://owasp.org/www-community/attacks/xss/")
 
     def load_payloads(self):
-        """Charge les payloads depuis un fichier JSON."""
+        """Charge les payloads depuis un fichier texte."""
         try:
             with open(self.payloads_file, "r", encoding="utf-8") as file:
-                return json.load(file)
+                # Lire toutes les lignes et les nettoyer des caractères inutiles (par exemple les retours à la ligne)
+                payloads = [line.strip() for line in file.readlines()]
+            return payloads
         except FileNotFoundError:
             print(f"Le fichier {self.payloads_file} est introuvable.")
             return []
-        except json.JSONDecodeError:
-            print("Erreur lors du chargement du fichier JSON.")
+        except Exception as e:
+            print(f"Erreur lors du chargement du fichier : {e}")
             return []
 
     def save_vulnerability(self, data):
@@ -100,7 +102,7 @@ class XSSApp:
             json.dump(vulnerabilities, file, ensure_ascii=False, indent=4)
 
     def test_xss(self):
-        """Teste les injections XSS et sauvegarde les vulnérabilités détectées."""
+        """Teste les injections XSS et affiche uniquement les payloads vulnérables."""
         url = self.url_entry.get()
         payloads = self.load_payloads()
 
@@ -116,36 +118,33 @@ class XSSApp:
         self.results_text.configure(state="normal")
         self.results_text.delete("1.0", "end")
 
-        for payload_data in payloads:
-            payload = payload_data["Payload"]
-            description = payload_data.get("Description", "N/A")
-
+        for payload in payloads:
             # Construire l'URL avec le payload
             test_url = f"{url}{payload}"
-            self.results_text.insert("end", f"[+] Test avec {description}...\n")
 
             try:
                 response = requests.get(test_url)
 
                 if payload in response.text:
+                    # Affiche uniquement le payload vulnérable
+                    self.results_text.insert("end", f"{payload}\n")
+
                     # Enregistre les vulnérabilités
                     vulnerability = {
                         "url": url,
                         "payload": payload,
-                        "description": description,
+                        "description": "XSS trouvé",
                         "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                     }
                     self.save_vulnerability(vulnerability)
 
-                    # Mettre à jour la liste des vulnérabilités dans l'interface
-                    self.vuln_list.insert("end", f"{vulnerability['time']} - {vulnerability['description']}\n")
-
-                    successful_tests.append(description)
+                    successful_tests.append(payload)
             except Exception as e:
                 self.results_text.insert("end", f"Erreur lors de la requête : {e}\n")
 
+        # Affiche le nombre de vulnérabilités détectées ou aucun
         if successful_tests:
-            self.results_text.insert("end", f"{len(successful_tests)} vulnérabilité(s) détectée(s).\n")
+            self.results_text.insert("end", f"\n{len(successful_tests)} vulnérabilité(s) détectée(s).\n")
         else:
             self.results_text.insert("end", "Aucune vulnérabilité détectée.\n")
 
@@ -156,7 +155,3 @@ class XSSApp:
         for widget in self.container.winfo_children():
             widget.destroy()
 
-
-def show_xss_page(container):
-    """Affiche la page d'attaque XSS dans le conteneur donné."""
-    XSSApp(container)
