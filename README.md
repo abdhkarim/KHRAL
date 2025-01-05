@@ -17,16 +17,26 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
    - Détecte les failles XSS dans les champs de saisie utilisateur et les paramètres d'URL.
    - Teste automatiquement l'exécution de scripts JavaScript malveillants.
 
-3. **Scanner Réseau** :
-   - Permet de cartographier les serveurs web et services actifs.
-   - Identifie les points d'entrée potentiels pour d'autres tests.
-
-4. **Broken Access Control** *(En développement)* :
+3. **Broken Access Control** *(En développement)* :
    - Analyse les restrictions d'accès inadéquates ou contournées.
    - Teste les autorisations manquantes ou mal configurées.
+
+4. **Identification and Authentication Failures** *(Utilisation de d'attaque Brute Force)* :
+   - Évalue la robustesse des mécanismes d’authentification en simulant des attaques par Brute Force.
+   - Identifie les failles dans la configuration des autorisations et les mécanismes de contrôle d’accès.
   
 
 ---
+## **Autres Fonctionnalités**
+1. **Scanner Réseau** :
+   - Permet de cartographier les serveurs web et services actifs.
+   - Identifie les points d'entrée potentiels pour d'autres tests.
+  
+2. **Générateur de mot de passe dans un trousseau** :
+   - Génère des mots de passe sécurisés et uniques en fonction des paramètres définis par l’utilisateur.
+   - Stocke et gère les mots de passe dans un trousseau local sécurisé pour une utilisation ultérieure.
+--- 
+
 
 ### 🖥️ Interface Graphique Moderne
 
@@ -114,3 +124,17 @@ git push origin feature/nom_de_fonctionnalité
 - [OWASP Top 10](https://owasp.org/Top10/fr/)
 - [MITRE ATT&CK](https://attack.mitre.org/)
 - [NIST CVE](https://nvd.nist.gov/vuln)
+
+## ⚠️ Message de Prévention
+
+### Usage Responsable
+Ce projet est conçu uniquement à des fins éducatives, de recherche en cybersécurité et de tests autorisés sur vos propres systèmes ou ceux pour lesquels vous avez une autorisation explicite. Toute utilisation abusive ou non autorisée peut être illégale et entraîner des sanctions pénales.
+
+### Rappels Importants :
+1. **Respect de la Loi** : L’utilisation de cet outil sur des systèmes sans autorisation préalable est strictement interdite par la loi.  
+2. **Éthique en Cybersécurité** : En tant que professionnel ou apprenti en cybersécurité, votre responsabilité est de protéger les systèmes et non de les compromettre.  
+3. **Responsabilité** : L'auteur de ce projet décline toute responsabilité en cas de mauvaise utilisation de cet outil.
+
+### Recommandations :
+- Testez uniquement vos propres systèmes ou ceux pour lesquels vous avez obtenu un consentement écrit.  
+- Consultez les réglementations locales et internationales concernant les tests de sécurité et les activités de cybersécurité.
