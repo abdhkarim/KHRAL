@@ -97,7 +97,6 @@ class SQLInjectionApp:
         """
         Crée tous les widgets nécessaires pour l'application.
         """
-
         # Colonne pour l'historique
         self.vuln_list_frame = ctk.CTkFrame(self.root, fg_color="#1e1e1e", width=300)
         self.vuln_list_frame.pack(side="left", fill="y", padx=10, pady=10)
@@ -185,11 +184,23 @@ class SQLInjectionApp:
             self.results_frame, 
             fg_color="#1e1e1e", 
             text_color="white", 
-            font=("Helvetica", 14), 
+            font=("Courier", 12),  # Police de style monospace
             wrap="word", 
             state="normal"
         )
         self.results_textbox.pack(fill="both", pady=10, padx=20, expand=True)
+
+        # Ajouter le contenu initial
+        initial_message = r""" 
+        ___  __    ___  ___  ________  ________  ___          
+        |\  \|\  \ |\  \|\  \|\   __  \|\   __  \|\  \         
+        \ \  \/  /|\ \  \\\  \ \  \|\  \ \  \|\  \ \  \        
+        \ \   ___  \ \   __  \ \   _  _\ \   __  \ \  \       
+        \ \  \\ \  \ \  \ \  \ \  \\  \\ \  \ \  \ \  \____  
+        \ \__\\ \__\ \__\ \__\ \__\\ _\\ \__\ \__\ \_______\
+            \|__| \|__|\|__|\|__|\|__|\|__|\|__|\|__|\|_______|
+        """
+        self.results_textbox.insert("end", initial_message)
         self.results_textbox.configure(state="disabled")
 
         # Boutons en bas
