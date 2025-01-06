@@ -5,7 +5,23 @@ KHRAL est un outil conçu pour détecter, tester et exploiter certaines des vuln
 Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identifier les failles de sécurité présentes dans leurs applications web et améliorer la robustesse de leur code face aux attaques.
 
 ---
+
 ![Page d'accueil](assets/screen/1.png)
+
+---
+## ⚠️ Message de Prévention
+
+### Usage Responsable
+Ce projet est conçu uniquement à des fins éducatives, de recherche en cybersécurité et de tests autorisés sur vos propres systèmes ou ceux pour lesquels vous avez une autorisation explicite. Toute utilisation abusive ou non autorisée peut être illégale et entraîner des sanctions pénales.
+
+### Rappels Importants :
+1. **Respect de la Loi** : L’utilisation de cet outil sur des systèmes sans autorisation préalable est strictement interdite par la loi.  
+2. **Éthique en Cybersécurité** : En tant que professionnel ou apprenti en cybersécurité, votre responsabilité est de protéger les systèmes et non de les compromettre.  
+3. **Responsabilité** : L'auteur de ce projet décline toute responsabilité en cas de mauvaise utilisation de cet outil.
+
+### Recommandations :
+- Testez uniquement vos propres systèmes ou ceux pour lesquels vous avez obtenu un consentement écrit.  
+- Consultez les réglementations locales et internationales concernant les tests de sécurité et les activités de cybersécurité.
 
 ---
 
@@ -134,16 +150,3 @@ git push origin feature/nom_de_fonctionnalité
 - [MITRE ATT&CK](https://attack.mitre.org/)
 - [NIST CVE](https://nvd.nist.gov/vuln)
 
-## ⚠️ Message de Prévention
-
-### Usage Responsable
-Ce projet est conçu uniquement à des fins éducatives, de recherche en cybersécurité et de tests autorisés sur vos propres systèmes ou ceux pour lesquels vous avez une autorisation explicite. Toute utilisation abusive ou non autorisée peut être illégale et entraîner des sanctions pénales.
-
-### Rappels Importants :
-1. **Respect de la Loi** : L’utilisation de cet outil sur des systèmes sans autorisation préalable est strictement interdite par la loi.  
-2. **Éthique en Cybersécurité** : En tant que professionnel ou apprenti en cybersécurité, votre responsabilité est de protéger les systèmes et non de les compromettre.  
-3. **Responsabilité** : L'auteur de ce projet décline toute responsabilité en cas de mauvaise utilisation de cet outil.
-
-### Recommandations :
-- Testez uniquement vos propres systèmes ou ceux pour lesquels vous avez obtenu un consentement écrit.  
-- Consultez les réglementations locales et internationales concernant les tests de sécurité et les activités de cybersécurité.
