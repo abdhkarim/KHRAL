@@ -15,6 +15,7 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
 1. **Injection SQL** : 
    - Identifie les points vulnérables aux injections SQL en analysant les paramètres d'URL ou de requête.  
    - Exploitation basique avec des chaînes SQL malveillantes.
+![Test d'injection SQL](assets/Screen/SQLInjection.png)
 
 2. **Cross-Site Scripting (XSS)** :
    - Détecte les failles XSS dans les champs de saisie utilisateur et les paramètres d'URL.
