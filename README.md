@@ -5,7 +5,7 @@ KHRAL est un outil conçu pour détecter, tester et exploiter certaines des vuln
 Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identifier les failles de sécurité présentes dans leurs applications web et améliorer la robustesse de leur code face aux attaques.
 
 ---
-![Page d'accueil](assets/screen/Homepage.png)
+![Page d'accueil](assets/screen/1.png)
 
 ---
 
@@ -15,7 +15,7 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
 1. **Injection SQL** : 
    - Identifie les points vulnérables aux injections SQL en analysant les paramètres d'URL ou de requête.  
    - Exploitation basique avec des chaînes SQL malveillantes.
-![Test d'injection SQL](assets/Screen/SQLInjection.png)
+![Test d'injection SQL](assets/Screen/3.png)
 
 2. **Cross-Site Scripting (XSS)** :
    - Détecte les failles XSS dans les champs de saisie utilisateur et les paramètres d'URL.
@@ -24,6 +24,8 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
 3. **Broken Access Control** *(En développement)* :
    - Analyse les restrictions d'accès inadéquates ou contournées.
    - Teste les autorisations manquantes ou mal configurées.
+
+  ![Broken Access Control](assets/Screen/3.png)
 
 4. **Identification and Authentication Failures** *(Utilisation de d'attaque Brute Force)* :
    - Évalue la robustesse des mécanismes d’authentification en simulant des attaques par Brute Force.
@@ -35,10 +37,14 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
 1. **Scanner Réseau** :
    - Permet de cartographier les serveurs web et services actifs.
    - Identifie les points d'entrée potentiels pour d'autres tests.
+  ![Scanner NMap](assets/Screen/4.png)
+
   
 2. **Générateur de mot de passe dans un trousseau** :
    - Génère des mots de passe sécurisés et uniques en fonction des paramètres définis par l’utilisateur.
    - Stocke et gère les mots de passe dans un trousseau local sécurisé pour une utilisation ultérieure.
+![Générateur de Mot de Passe](assets/Screen/5.png)
+
 --- 
 
 
