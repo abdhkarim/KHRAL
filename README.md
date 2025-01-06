@@ -25,7 +25,7 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
    - Analyse les restrictions d'accès inadéquates ou contournées.
    - Teste les autorisations manquantes ou mal configurées.
 
-  ![Broken Access Control](assets/screen/3.png)
+  ![Broken Access Control](assets/screen/4.png)
 
 4. **Identification and Authentication Failures** *(Utilisation de d'attaque Brute Force)* :
    - Évalue la robustesse des mécanismes d’authentification en simulant des attaques par Brute Force.
