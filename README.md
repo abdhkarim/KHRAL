@@ -3,7 +3,10 @@
 KHRAL est un outil conçu pour détecter, tester et exploiter certaines des vulnérabilités web les plus courantes, en se basant sur les directives du **Top 10 OWASP**. Ce projet vise à fournir aux utilisateurs des outils personnalisés pour les tests d'intrusion, tout en offrant une meilleure compréhension des méthodologies de pentesting.
 
 Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identifier les failles de sécurité présentes dans leurs applications web et améliorer la robustesse de leur code face aux attaques.
-(assets/screen/Homepage.png)
+
+---
+![Page d'accueil](assets/Screen/homepage.png)
+
 ---
 
 ## **Fonctionnalités**
