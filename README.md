@@ -37,13 +37,13 @@ Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identif
 1. **Scanner Réseau** :
    - Permet de cartographier les serveurs web et services actifs.
    - Identifie les points d'entrée potentiels pour d'autres tests.
-  ![Scanner NMap](assets/screen/4.png)
+  ![Scanner NMap](assets/screen/5.png)
 
   
 2. **Générateur de mot de passe dans un trousseau** :
    - Génère des mots de passe sécurisés et uniques en fonction des paramètres définis par l’utilisateur.
    - Stocke et gère les mots de passe dans un trousseau local sécurisé pour une utilisation ultérieure.
-![Générateur de Mot de Passe](assets/screen/5.png)
+![Générateur de Mot de Passe](assets/screen/6.png)
 
 --- 
 
