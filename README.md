@@ -141,7 +141,8 @@ git push origin feature/nom_de_fonctionnalité
 
 ### Objectifs à Court Terme
 
-- Finaliser l’outil de test pour le **Broken Access Control**.
+- Finaliser l’outil de test pour le **Generateur de mot de passe**.
+- Finaliser l’outil de test pour le **Scanner de port (NMap)**.
 - Renforcer la documentation pour les **utilisateurs débutants**.
   
 ## Liens utiles
