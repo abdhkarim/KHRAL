@@ -10,14 +10,14 @@ from shared import navigate_to_page  # Si nécessaire pour réinitialiser la pag
 class BruteForceAttack:
     def __init__(self, url, username, password_file, login_failed_string, cookie_value=None, threads=10):
         """
-        Initialisation de l'attaque brute force.
+        Initialise l'attaque brute force.
         
         :param url: URL cible pour l'attaque.
         :param username: Nom d'utilisateur à bruteforcer.
         :param password_file: Fichier contenant les mots de passe à tester.
         :param login_failed_string: Chaîne qui indique un échec de connexion.
         :param cookie_value: Valeur optionnelle pour un cookie.
-        :param threads: Nombre de threads simultanés.
+        :param threads: Nombre de threads simultanés pour l'attaque.
         """
         self.url = url
         self.username = username
@@ -27,7 +27,13 @@ class BruteForceAttack:
         self.threads = threads
 
     def try_login(self, session, password, result_queue):
-        """Teste un mot de passe en envoyant une requête HTTP POST."""
+        """
+        Teste un mot de passe en envoyant une requête HTTP POST pour simuler une tentative de connexion.
+
+        :param session: Session de requête HTTP pour maintenir la persistance des cookies.
+        :param password: Mot de passe à tester.
+        :param result_queue: Queue pour collecter les résultats de l'attaque brute force.
+        """
         data = {'username': self.username, 'password': password, 'Login': 'submit'}
         try:
             if self.cookie_value:
@@ -51,7 +57,11 @@ class BruteForceAttack:
             return
 
     def run(self, result_queue):
-        """Lance l'attaque brute force."""
+        """
+        Lance l'attaque brute force en soumettant des tentatives de connexion en parallèle.
+
+        :param result_queue: Queue pour collecter les résultats de l'attaque brute force.
+        """
         session = requests.Session()
         try:
             with open(self.password_file, 'r') as file:
@@ -67,7 +77,11 @@ class BruteForceAttack:
 
 class BruteForcePage:
     def __init__(self, container):
-        """Initialise l'interface graphique et les composants."""
+        """
+        Initialise l'interface graphique pour l'attaque brute force.
+
+        :param container: Conteneur dans lequel l'interface graphique sera affichée.
+        """
         self.container = container
         self.url_entry = None
         self.username_entry = None
@@ -79,11 +93,17 @@ class BruteForcePage:
         self._create_ui()
 
     def _create_ui(self):
-        """Crée les éléments de l'interface graphique."""
+        """
+        Crée l'interface utilisateur avec les champs de saisie, les boutons et la zone des résultats.
+        """
         navigate_to_page(self.container, self.show_page)
 
     def show_page(self, container):
-        """Affiche la page brute force dans le conteneur."""
+        """
+        Affiche la page brute force dans le conteneur donné.
+
+        :param container: Conteneur dans lequel l'interface de l'attaque brute force sera affichée.
+        """
         # Colonne pour l'historique
         vuln_list_frame = ctk.CTkFrame(container, fg_color="#1e1e1e", width=300)
         vuln_list_frame.pack(side="left", fill="y", padx=10, pady=10)
@@ -126,7 +146,11 @@ class BruteForcePage:
         attack_button.pack(side="right", padx=5)
 
     def _create_input_fields(self, main_frame):
-        """Crée les champs de saisie pour l'URL, l'utilisateur, le fichier de mots de passe, etc."""
+        """
+        Crée les champs de saisie pour l'URL, le nom d'utilisateur, le fichier de mots de passe, etc.
+
+        :param main_frame: Frame principal contenant les champs de saisie.
+        """
         # Barre pour entrer l'URL
         url_frame = ctk.CTkFrame(main_frame, fg_color="#2e2e2e")
         url_frame.pack(pady=5, padx=20, anchor="n", fill="x")
@@ -158,6 +182,9 @@ class BruteForcePage:
         self.password_file_entry.pack(side="left", padx=5, fill="x", expand=True)
 
         def browse_file():
+            """
+            Ouvre une boîte de dialogue pour sélectionner un fichier de mots de passe.
+            """
             file_path = filedialog.askopenfilename(title="Sélectionner un fichier de mots de passe", filetypes=[("Text Files", "*.txt")])
             if file_path:
                 self.password_file_entry.insert(0, file_path)
@@ -186,7 +213,9 @@ class BruteForcePage:
         self.cookie_entry.pack(side="left", padx=5, fill="x", expand=True)
 
     def run_brute_force(self):
-        """Lance l'attaque brute force en utilisant les informations saisies."""
+        """
+        Lance l'attaque brute force en utilisant les informations saisies dans l'interface graphique.
+        """
         url = self.url_entry.get()
         username = self.username_entry.get()
         password_file = self.password_file_entry.get()
@@ -215,7 +244,9 @@ class BruteForcePage:
         self._process_results()
 
     def _process_results(self):
-        """Traite les résultats de l'attaque brute force."""
+        """
+        Traite et affiche les résultats de l'attaque brute force au fur et à mesure.
+        """
         try:
             while not self.result_queue.empty():
                 result = self.result_queue.get_nowait()

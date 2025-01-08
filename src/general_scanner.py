@@ -11,12 +11,33 @@ executor = ThreadPoolExecutor()
 
 class NmapScannerApp:
     def __init__(self, container):
+        """
+        Initialise l'application NmapScannerApp.
+
+        Cette méthode configure l'application, initialise le conteneur de l'interface graphique et 
+        prépare l'exécution des scans de manière asynchrone en utilisant un ThreadPoolExecutor.
+
+        Paramètres :
+        container (tkinter.Widget) : Le conteneur parent dans lequel les widgets de l'application seront ajoutés.
+        """
         self.container = container
         self.executor = executor
         self.create_widgets()
 
     def create_widgets(self):
-        """ Crée tous les widgets pour la page de scan Nmap. """
+        """
+        Crée tous les widgets pour la page de scan Nmap.
+
+        Cette méthode définit l'interface utilisateur de l'application, y compris :
+        - Une section pour entrer l'adresse cible (IP ou nom d'hôte).
+        - Une section pour entrer la plage de ports à scanner.
+        - Une zone pour afficher les résultats du scan.
+        - Un bouton pour démarrer le scan Nmap.
+
+        Elle configure également les boutons et les zones de saisie des informations de la cible et des ports.
+
+        Aucun retour.
+        """
         clear_container(self.container)
 
         # Conteneur principal
@@ -69,7 +90,19 @@ class NmapScannerApp:
         self.scan_button.pack(side="right", padx=5)
 
     def validate_target(self, target):
-        """ Valide que la cible est une adresse IP ou un nom d'hôte valide. """
+        """
+        Valide que la cible est une adresse IP ou un nom d'hôte valide.
+
+        Cette méthode vérifie si l'adresse donnée est une adresse IP valide en utilisant 
+        la bibliothèque ipaddress. Si ce n'est pas une adresse IP, elle essaie de résoudre 
+        le nom d'hôte à l'aide de la bibliothèque socket.
+
+        Paramètres :
+        target (str) : L'adresse cible à valider (peut être une IP ou un nom d'hôte).
+
+        Retours :
+        bool : Retourne True si la cible est valide (IP ou nom d'hôte), False sinon.
+        """
         try:
             ipaddress.ip_address(target)
             return True
@@ -84,7 +117,19 @@ class NmapScannerApp:
             return False
 
     def validate_ports(self, start_port, end_port):
-        """ Valide que les ports sont dans les limites valides. """
+        """
+        Valide que les ports sont dans les limites valides et dans un format correct.
+
+        Cette méthode vérifie que les ports fournis sont des entiers et qu'ils sont compris 
+        dans la plage valide de 1 à 65535, et que le port de départ est inférieur ou égal au port de fin.
+
+        Paramètres :
+        start_port (str) : Le port de départ à valider.
+        end_port (str) : Le port de fin à valider.
+
+        Retours :
+        bool : Retourne True si les ports sont valides, False sinon.
+        """
         try:
             start_port = int(start_port)
             end_port = int(end_port)
@@ -96,7 +141,15 @@ class NmapScannerApp:
             return False
 
     def start_nmap_scan(self):
-        """ Lance un scan de type Nmap après avoir validé les entrées. """
+        """
+        Lance un scan Nmap après avoir validé les entrées de l'utilisateur.
+
+        Cette méthode récupère l'URL de la cible et la plage de ports spécifiés par l'utilisateur, 
+        puis valide ces entrées. Si elles sont valides, elle désactive le bouton de scan et lance 
+        le scan dans un thread séparé pour éviter de bloquer l'interface utilisateur.
+
+        Aucun retour.
+        """
         target = self.target_entry.get()
         start_port = self.start_port_entry.get()
         end_port = self.end_port_entry.get()
@@ -120,7 +173,21 @@ class NmapScannerApp:
         self.executor.submit(self.nmap_scan, target, start_port, end_port)
 
     def nmap_scan(self, target, start_port, end_port):
-        """ Fonction principale pour effectuer un scan de ports avec nmap. """
+        """
+        Effectue un scan de ports avec Nmap sur la cible spécifiée.
+
+        Cette méthode utilise la bibliothèque nmap pour effectuer un scan de ports en utilisant les 
+        paramètres de la cible et de la plage de ports fournis. Les résultats du scan sont formatés 
+        et affichés dans l'interface utilisateur. Si une erreur se produit, un message d'erreur est 
+        affiché.
+
+        Paramètres :
+        target (str) : L'adresse cible à scanner (IP ou nom d'hôte).
+        start_port (str) : Le port de début de la plage de ports à scanner.
+        end_port (str) : Le port de fin de la plage de ports à scanner.
+
+        Aucun retour. Les résultats sont affichés dans l'interface utilisateur.
+        """
         nm = nmap.PortScanner()
         results = []
 
@@ -149,10 +216,28 @@ class NmapScannerApp:
         self.container.after(0, self.enable_scan_button)
 
     def update_results(self, message):
-        """ Met à jour la zone de texte avec un message final. """
+        """
+        Met à jour la zone de texte avec le message fourni.
+
+        Cette méthode efface tout texte existant dans la zone de texte des résultats et 
+        insère le message spécifié, qui contient les résultats du scan ou les erreurs rencontrées.
+
+        Paramètres :
+        message (str) : Le message à afficher dans la zone de texte. Cela peut inclure les résultats 
+                        du scan ou des messages d'erreur.
+
+        Aucun retour.
+        """
         self.results_textbox.delete("1.0", "end")  # Effacer le texte précédent
         self.results_textbox.insert("end", message)  # Ajouter le nouveau message
 
     def enable_scan_button(self):
-        """ Réactive le bouton de scan après la fin du scan. """
+        """
+        Réactive le bouton de scan après la fin du scan.
+
+        Cette méthode permet de réactiver le bouton de scan une fois que le processus de scan est terminé, 
+        permettant à l'utilisateur de lancer un nouveau scan si nécessaire.
+
+        Aucun paramètre et aucun retour.
+        """
         self.scan_button.configure(state="normal")

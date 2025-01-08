@@ -4,7 +4,7 @@ src package
 Submodules
 ----------
 
-src.access\_control module
+src.access_control module
 --------------------------
 
 .. automodule:: src.access_control
@@ -36,7 +36,7 @@ src.bruteforce module
    :undoc-members:
    :show-inheritance:
 
-src.general\_scanner module
+src.general_scanner module
 ---------------------------
 
 .. automodule:: src.general_scanner
@@ -56,14 +56,6 @@ src.main module
 ---------------
 
 .. automodule:: src.main
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-src.passwordgen module
-----------------------
-
-.. automodule:: src.passwordgen
    :members:
    :undoc-members:
    :show-inheritance:
