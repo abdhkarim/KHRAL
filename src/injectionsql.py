@@ -9,36 +9,15 @@ from PIL import Image, ImageTk
 import tkinter.messagebox as messagebox
 from shared import clear_container  # Import de la fonction pour effacer le conteneur
 
+
 class SQLInjectionTester:
-    """
-    Cette classe gère les tests d'injection SQL. Elle permet de charger des payloads,
-    de les encoder et de tester une URL cible avec différents types d'injections SQL.
-    """
-    
     def __init__(self, url, db_type):
-        """
-        Initialise un testeur d'injection SQL pour une URL donnée.
-        
-        Args:
-            url (str): L'URL de l'application web à tester.
-            db_type (str): Le type de base de données utilisé ("sql" pour SQL ou "nosql" pour NoSQL).
-        """
         self.url = url
         self.db_type = db_type
 
     @staticmethod
     def load_payloads(file_path):
-        """
-        Charge les payloads SQL à partir d'un fichier JSON. Chaque payload représente 
-        une tentative d'injection pour tester la vulnérabilité SQL de l'application.
-
-        Args:
-            file_path (str): Le chemin vers le fichier JSON contenant les payloads.
-
-        Returns:
-            list: Une liste de payloads chargés depuis le fichier JSON. Si le fichier n'est pas trouvé 
-                  ou s'il y a une erreur lors du chargement, retourne une liste vide.
-        """
+        """Charge les payloads depuis un fichier JSON."""
         try:
             with open(file_path, "r", encoding="utf-8") as file:
                 data = json.load(file)
@@ -52,30 +31,11 @@ class SQLInjectionTester:
 
     @staticmethod
     def encode_sql_payload(payload):
-        """
-        Encode les caractères spéciaux dans un payload SQL pour les rendre sûrs à inclure dans une URL.
-
-        Args:
-            payload (str): Le payload SQL à encoder.
-
-        Returns:
-            str: Le payload encodé dans un format sûr pour une URL.
-        """
+        """Encode les caractères spéciaux dans un payload SQL."""
         return urllib.parse.quote(payload)
 
     def test_injection(self, payload, description):
-        """
-        Teste un payload d'injection SQL contre l'URL spécifiée. Vérifie si la réponse de l'application 
-        indique une vulnérabilité.
-
-        Args:
-            payload (str): Le payload SQL à tester.
-            description (str): Une description du type d'injection pour le rapport.
-
-        Returns:
-            tuple: Un tuple contenant un booléen indiquant si une vulnérabilité a été détectée 
-                   et une description du résultat.
-        """
+        """Test d'injection SQL pour un payload donné."""
         encoded_payload = self.encode_sql_payload(payload) if self.db_type == "sql" else payload
         test_url = f"{self.url}{encoded_payload}"
 
@@ -98,31 +58,11 @@ class SQLInjectionTester:
 
 
 class VulnerabilityManager:
-    """
-    Cette classe gère l'historique des vulnérabilités détectées. Elle permet de sauvegarder 
-    de nouvelles vulnérabilités et de charger les vulnérabilités précédemment enregistrées.
-    """
-
     def __init__(self, vuln_file="vulnerabilities.json"):
-        """
-        Initialise un gestionnaire de vulnérabilités avec un fichier JSON pour stocker les résultats.
-
-        Args:
-            vuln_file (str): Le chemin vers le fichier JSON où les vulnérabilités sont enregistrées.
-        """
         self.vuln_file = vuln_file
 
     def save_vulnerability(self, data):
-        """
-        Enregistre une nouvelle vulnérabilité dans un fichier JSON.
-
-        Args:
-            data (dict): Un dictionnaire contenant les détails de la vulnérabilité, comme l'URL, 
-                         la description et le type d'injection.
-
-        Cette méthode lit le fichier JSON, ajoute la nouvelle vulnérabilité et sauvegarde 
-        les changements dans le fichier.
-        """
+        """Enregistre une vulnérabilité dans un fichier JSON."""
         try:
             with open(self.vuln_file, "r", encoding="utf-8") as file:
                 vulnerabilities = json.load(file)
@@ -135,13 +75,7 @@ class VulnerabilityManager:
             json.dump(vulnerabilities, file, ensure_ascii=False, indent=4)
 
     def load_vulnerabilities(self):
-        """
-        Charge l'historique des vulnérabilités détectées depuis le fichier JSON.
-
-        Returns:
-            list: Une liste de vulnérabilités enregistrées dans le fichier. Si le fichier n'existe pas 
-                  ou s'il est vide, retourne une liste vide.
-        """
+        """Charge l'historique des vulnérabilités depuis le fichier JSON."""
         try:
             with open(self.vuln_file, "r", encoding="utf-8") as file:
                 return json.load(file)
@@ -150,21 +84,7 @@ class VulnerabilityManager:
 
 
 class SQLInjectionApp:
-    """
-    Cette classe gère l'application graphique pour tester les injections SQL. Elle utilise 
-    tkinter et customtkinter pour afficher une interface utilisateur, permet à l'utilisateur 
-    de saisir l'URL à tester et d'exécuter les tests d'injection SQL avec différents types 
-    de payloads.
-    """
-    
     def __init__(self, root):
-        """
-        Initialise l'application en créant une fenêtre principale et en configurant les 
-        différents composants de l'interface graphique.
-
-        Args:
-            root (Tk): La fenêtre principale de l'application tkinter.
-        """
         self.root = root
         self.vuln_manager = VulnerabilityManager()
         self.sql_tester = None
@@ -175,9 +95,7 @@ class SQLInjectionApp:
 
     def create_widgets(self):
         """
-        Crée tous les widgets nécessaires pour l'application. Cela inclut les cadres, 
-        les étiquettes, les champs de saisie, et les boutons nécessaires pour tester 
-        les injections SQL et afficher les résultats.
+        Crée tous les widgets nécessaires pour l'application.
         """
         # Colonne pour l'historique
         self.vuln_list_frame = ctk.CTkFrame(self.root, fg_color="#1e1e1e", width=300)
@@ -313,44 +231,57 @@ class SQLInjectionApp:
 
     def open_documentation(self):
         """
-        Ouvre la documentation de l'application dans un navigateur web. 
-        Cela permet à l'utilisateur de lire les instructions et informations concernant les tests SQL.
+        Ouvre un lien vers la documentation sur les injections SQL.
         """
-        webbrowser.open("https://example.com")
+        webbrowser.open(
+            "https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection"
+        )
 
     def start_testing(self):
         """
-        Démarre le processus de test d'injection SQL. Elle recueille les informations de l'utilisateur 
-        (URL cible, type de vulnérabilité), effectue les tests et affiche les résultats.
+        Démarre les tests d'injection SQL en fonction des options sélectionnées.
         """
-        url = self.url_entry.get()
         choice = self.choice_entry.get()
-
-        if not url:
-            messagebox.showerror("Erreur", "Veuillez entrer une URL valide.")
+        try:
+            choice = int(choice)
+            if choice < 1 or choice > 5:
+                raise ValueError
+        except ValueError:
+            self.display_result("[!] Choix invalide. Veuillez entrer un numéro entre 1 et 5.\n")
             return
 
-        if choice not in ["1", "2", "3", "4", "5"]:
-            messagebox.showerror("Erreur", "Veuillez entrer un choix valide pour le type d'injection.")
+        payload_files = {
+            1: "src/payloads/SQLInj/inband_sql.json",
+            2: "src/payloads/SQLInj/error_based.json",
+            3: "src/payloads/SQLInj/time_based_sql.json",
+            4: "src/payloads/SQLInj/union_based_sql.json",
+            5: "src/payloads/SQLInj/authbypass.json",
+        }
+
+        payload_file = payload_files.get(choice)
+        if not payload_file:
+            self.display_result("[!] Type d'injection non trouvé.\n")
             return
 
-        # Définir le fichier de payloads et tester l'injection
-        payload_file = "sql_payloads.json"
-        payloads = SQLInjectionTester.load_payloads(payload_file)
-        
+        self.sql_tester = SQLInjectionTester(self.url_entry.get(), "sql")
+        payloads = self.sql_tester.load_payloads(payload_file)
         if not payloads:
-            messagebox.showerror("Erreur", "Aucun payload trouvé dans le fichier.")
+            self.display_result("[!] Aucun payload disponible pour ce type d'injection.\n")
             return
-        
-        test_results = []
-        for payload in payloads:
-            test_result, description = self.sql_tester.test_injection(payload, description)
 
-            if test_result:
-                test_results.append(f"[+] Vulnérabilité trouvée: {description}")
+        for payload_data in payloads:
+            payload = payload_data.get("payload")
+            description = payload_data.get("description")
+            detected, result = self.sql_tester.test_injection(payload, description)
+            if detected:
+                self.display_result(f"[!] Vulnérabilité détectée : {result}\n")
+            else:
+                self.display_result("[-] Pas de vulnérabilité détectée.\n")
 
-        if test_results:
-            self.results_textbox.configure(state="normal")
-            self.results_textbox.delete(1.0, "end")
-            self.results_textbox.insert("end", "\n".join(test_results))
-            self.results_textbox.configure(state="disabled")
+    def display_result(self, message):
+        """
+        Affiche un message dans la zone des résultats.
+        """
+        self.results_textbox.configure(state="normal")
+        self.results_textbox.insert("end", message)
+        self.results_textbox.configure(state="disabled")

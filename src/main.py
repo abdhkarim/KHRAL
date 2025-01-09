@@ -130,7 +130,6 @@ class App:
             ("Contrôle des Autorisations", self.show_access_control_page),
             ("Attaque Brute Force", self.show_brute_force_page),
             ("Scanner des ports", self.show_nmap_page),
-            ("Générateur de Mot de Passe", self.show_crypto_tests_page),
             ("À Propos", self.show_about_page),
         ]
 
