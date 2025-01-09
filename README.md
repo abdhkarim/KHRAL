@@ -5,10 +5,6 @@ KHRAL est un outil conçu pour détecter, tester et exploiter certaines des vuln
 Grâce à **KHRAL**, les testeurs de sécurité et développeurs peuvent identifier les failles de sécurité présentes dans leurs applications web et améliorer la robustesse de leur code face aux attaques.
 
 ---
-
-![Page d'accueil](assets/screen/1.png)
-
----
 ## ⚠️ Message de Prévention
 
 ### Usage Responsable
@@ -115,6 +111,8 @@ Assurez-vous que Python est installé (version 3.8+). Ensuite, exécutez :
    ```
 
 Cela ouvrira une fenêtre graphique avec les différents outils de tests de vulnérabilités.
+![Page d'accueil](assets/screen/1.png)
+
 
 ## Contribuer
 
