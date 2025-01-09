@@ -1,0 +1,17 @@
+# Packages spécifiques à votre projet
+customtkinter==5.1.3    # Pour l'interface graphique
+requests==2.31.0        # Pour effectuer des requêtes HTTP
+validators==0.20.0      # Pour valider les URL ou autres entrées utilisateur
+tkintertable            # Optionnel, pour des tables interactives dans l'interface
+pillow                  # Pour manipuler des images
+cryptography==39.0.1    # Pour la gestion de la cryptographie (Fernet)
+python-nmap==0.7.1      # Pour utiliser nmap dans votre projet
+
+# Paquets nécessaires pour Linux
+# distutils est requis pour customtkinter
+distutils               # Gestion des modules et extensions Python
+
+# Environnement de développement
+pytest                  # Pour les tests unitaires
+sphinx                  # Pour la documentation
+sphinx-pdj-theme        # Thème personnalisé pour Sphinx
