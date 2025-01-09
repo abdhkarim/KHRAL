@@ -107,10 +107,11 @@ env\Scripts\activate     # Sur Windows
 Assurez-vous que Python est installé (version 3.8+). Ensuite, exécutez :
    ```bash
    pip install -r requirements.txt
+   pip install -r requirementslinux.txt # Pour ceux qui sont sur une distrib Ubuntu/Linux
    ```
 4.	**Lancer l’application** :
    ```bash
-   python main.py
+   python src/main.py
    ```
 
 Cela ouvrira une fenêtre graphique avec les différents outils de tests de vulnérabilités.
