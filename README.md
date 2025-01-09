@@ -105,7 +105,15 @@ Assurez-vous que Python est installé (version 3.8+). Ensuite, exécutez :
    pip install -r requirements.txt
    pip install -r requirementslinux.txt # Pour ceux qui sont sur une distrib Ubuntu/Linux
    ```
+Si le requirement ne fonctionne pas, voici les commandes a faire dans l'environnement virtuel
+   ```bash
+   pip install customtkinter
+   pip install pillow
+   pip install requests
+   pip install python-nmap
+   ```
 4.	**Lancer l’application** :
+   Placez vous dans la racine du dossier puis exécutez cette ligne de code :
    ```bash
    python src/main.py
    ```
