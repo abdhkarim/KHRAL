@@ -88,7 +88,7 @@ Ce projet est conçu uniquement à des fins éducatives, de recherche en cybers�
 
 1. **Cloner le projet** :  
    ```bash
-   git clone https://github.com/votre-repo/KHRAL.git
+   git clone https://github.com/abdhkarim/KHRAL.git
    cd KHRAL
    ```
 2. **Crée un environnement virtuel et activez-le (optionnel mais recommandé)** :
