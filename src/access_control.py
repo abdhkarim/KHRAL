@@ -193,29 +193,74 @@ class AccessControlApp:
 
         return "\n".join(results)
     
+    import requests
+
     def test_vertical_access(self, url):
         """
-        Teste l'accès vertical (accès à des ressources non autorisées).
+        Teste l'accès vertical (accès à des ressources réservées aux administrateurs) avec 3 mécanismes d'authentification.
         """
-        admin_url = f"{url}/admin/dashboard"  # URL réservée à un administrateur
-        regular_user_url = f"{url}/user/settings"  # URL accessible à un utilisateur normal
+        # Liste des pages réservées aux administrateurs
+        admin_urls = [
+            f"{url}/admin/dashboard",
+            f"{url}/admin",
+            f"{url}/admin/tableofuser"
+        ]
+        
         session = requests.Session()
         results = []
 
-        # Se connecter avec un utilisateur régulier
-        login_url = f"{url}/login"
-        login_payload = {"username": "regularuser", "password": "password123"}  # Utilisateur ordinaire
-        login_response = session.post(login_url, data=login_payload)
-        if login_response.status_code != 200:
-            results.append(f"Échec de la connexion pour utilisateur régulier (code {login_response.status_code})")
-            return "\n".join(results)
+        # --- 1. Test avec OAuth2 ---
+        oauth2_login_url = f"{url}/login/oauth2"  # URL de login OAuth2
+        oauth2_login_payload = {"username": "admin", "password": "adminpassword"}  # Remplacez par les bons identifiants
+        oauth2_login_response = session.post(oauth2_login_url, data=oauth2_login_payload)
+        
+        if oauth2_login_response.status_code == 200:
+            oauth2_token = oauth2_login_response.json().get("access_token")  # On suppose que l'OAuth2 renvoie un token
+            oauth2_headers = {"Authorization": f"Bearer {oauth2_token}"}
 
-        # Test d'accès à la page utilisateur normal
-        response = session.get(regular_user_url)
-        if response.status_code == 200:
-            results.append("Accès autorisé à la page utilisateur normal (comportement attendu).")
+            for admin_url in admin_urls:
+                response = session.get(admin_url, headers=oauth2_headers)
+                if response.status_code == 200:
+                    results.append(f"(OAuth2) Accès autorisé à la page {admin_url}.")
+                else:
+                    results.append(f"(OAuth2) Erreur d'accès à la page {admin_url} (code {response.status_code}).")
         else:
-            results.append(f"Erreur d'accès à la page utilisateur normal (code {response.status_code}).")
+            results.append(f"Échec de la connexion OAuth2 (code {oauth2_login_response.status_code})")
+
+        # --- 2. Test avec JWT ---
+        jwt_login_url = f"{url}/login/jwt"  # URL de login JWT
+        jwt_login_payload = {"username": "admin", "password": "adminpassword"}  
+        jwt_login_response = session.post(jwt_login_url, data=jwt_login_payload)
+        
+        if jwt_login_response.status_code == 200:
+            jwt_token = jwt_login_response.json().get("token")  # On suppose que JWT renvoie un token
+            jwt_headers = {"Authorization": f"Bearer {jwt_token}"}
+
+            for admin_url in admin_urls:
+                response = session.get(admin_url, headers=jwt_headers)
+                if response.status_code == 200:
+                    results.append(f"(JWT) Accès autorisé à la page {admin_url}.")
+                else:
+                    results.append(f"(JWT) Erreur d'accès à la page {admin_url} (code {response.status_code}).")
+        else:
+            results.append(f"Échec de la connexion JWT (code {jwt_login_response.status_code})")
+
+        # --- 3. Test avec méthode classique (login avec formulaire) ---
+        classic_login_url = f"{url}/login"  # URL de login classique
+        classic_login_payload = {"username": "admin", "password": "adminpassword"}  # Identifiants classiques
+        classic_login_response = session.post(classic_login_url, data=classic_login_payload)
+        
+        if classic_login_response.status_code == 200:
+            for admin_url in admin_urls:
+                response = session.get(admin_url)
+                if response.status_code == 200:
+                    results.append(f"(Classique) Accès autorisé à la page {admin_url}.")
+                else:
+                    results.append(f"(Classique) Erreur d'accès à la page {admin_url} (code {response.status_code}).")
+        else:
+            results.append(f"Échec de la connexion classique (code {classic_login_response.status_code})")
+
+        return "\n".join(results)
 
         # Test d'accès à la page administrateur avec un utilisateur normal
         admin_token = self.get_admin_token(url)  # Exemple pour obtenir un token administrateur

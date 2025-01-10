@@ -10,59 +10,67 @@ import tkinter.messagebox as messagebox
 from shared import clear_container  # Import de la fonction pour effacer le conteneur
 
 
+import json
+import requests
+import urllib.parse
+
 class SQLInjectionTester:
     def __init__(self, url, db_type):
+        """Initialisation de la classe avec l'URL cible et le type de base de données."""
         self.url = url
         self.db_type = db_type
 
     @staticmethod
     def load_payloads(file_path):
-        """Charge les payloads depuis un fichier JSON."""
+        """Charge les payloads SQL depuis un fichier JSON."""
         try:
             with open(file_path, "r", encoding="utf-8") as file:
                 data = json.load(file)
             return data.get("payloads", [])
         except FileNotFoundError:
-            print(f"Le fichier {file_path} est introuvable.")
+            print(f"[!] Fichier non trouvé : {file_path}")
             return []
         except json.JSONDecodeError:
-            print("Erreur lors du chargement du fichier JSON.")
+            print("[!] Erreur de formatage dans le fichier JSON.")
             return []
 
     @staticmethod
     def encode_sql_payload(payload):
-        """Encode les caractères spéciaux dans un payload SQL."""
+        """Encode un payload SQL pour qu'il soit correctement transmis dans l'URL."""
         return urllib.parse.quote(payload)
 
     def test_injection(self, payload, description):
         """
-        Test d'injection SQL pour un payload donné.
+        Test d'injection SQL en envoyant un payload et en vérifiant les erreurs dans la réponse.
         """
-        # Encoder le payload si nécessaire
+
+        # Encoder le payload si nécessaire (selon le type de base de données)
         encoded_payload = self.encode_sql_payload(payload) if self.db_type == "sql" else payload
-        # Construire l'URL de test
+        
+        # Construction de l'URL de test avec le payload
         test_url = f"{self.url}?id={encoded_payload}"
 
-        # En-têtes pour simuler un utilisateur normal
+        # Définir les en-têtes pour simuler une requête normale (pas un bot)
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
         }
 
         try:
-            # Effectuer une requête HTTP GET
+            # Exécuter la requête HTTP GET
             response = requests.get(test_url, headers=headers, timeout=10)
 
-            # Vérifier la réponse pour les signatures d'erreurs SQL
+            # Vérification de la réponse pour détecter des erreurs spécifiques liées aux injections SQL
             if self.db_type == "sql":
                 error_keywords = ["sql syntax", "mysql", "syntax error", "unclosed quotation mark", "odbc"]
                 detected = any(keyword in response.text.lower() for keyword in error_keywords)
-            else:  # Gestion pour NoSQL (par exemple MongoDB)
+            else:  # Traitement pour NoSQL (par exemple MongoDB)
                 no_sql_keywords = ["mongodb", "no sql", "bson", "unrecognized"]
                 detected = any(keyword in response.text.lower() for keyword in no_sql_keywords)
 
-            return detected, description if detected else "Pas de vulnérabilité détectée"
+            # Retourner un message indiquant si une vulnérabilité a été détectée
+            return detected, description if detected else "Aucune vulnérabilité détectée"
         except requests.exceptions.RequestException as e:
-            # En cas d'erreur réseau ou autre problème
+            # Gestion des erreurs de réseau ou autres exceptions
             error_message = f"[!] Erreur lors de la requête HTTP : {str(e)}"
             print(error_message)
             return False, error_message
