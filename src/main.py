@@ -41,7 +41,6 @@ from injectionsql import SQLInjectionApp
 from attaquexss import XSSApp
 from access_control import AccessControlApp
 from general_scanner import NmapScannerApp
-# from passwordgen import show_password_generator_page
 from bruteforce import BruteForcePage
 from apropos import show_about_page
 
@@ -66,7 +65,6 @@ class App:
             Liste des fonctionnalités avec leurs titres et actions associées.
     """
     
-
     def __init__(self):
         """Initialise l'application et configure la fenêtre principale."""
         self.root = ctk.CTk()
@@ -122,6 +120,15 @@ class App:
         # Cadre pour le contenu dynamique
         self.content_frame = ctk.CTkFrame(self.main_frame, fg_color="#1e1e1e")
         self.content_frame.pack(side="right", expand=True, fill="both", padx=10, pady=10)
+
+        # Titre pour les vulnérabilités
+        title_label = ctk.CTkLabel(
+            self.menu_frame,
+            text="Vulnérabilités",
+            font=("Helvetica", 18, "bold"),
+            text_color="white",
+        )
+        title_label.pack(pady=20)
 
         # Ajouter les boutons pour chaque fonctionnalité
         self.features = [
@@ -186,7 +193,8 @@ class App:
                 " - Tester les injections SQL\n"
                 " - Analyser les failles XSS\n"
                 " - Scanner des ports\n"
-                " - Générer des mots de passe sécurisés\n"
+                " - Attaque Brute Force\n"
+                " - Contrôle des Autorisations\n"
             ),
             font=("Helvetica", 16),
             text_color="lightgray",
@@ -263,9 +271,6 @@ class App:
             Cadre dans lequel charger le contenu de la page.
         """
         NmapScannerApp(content_frame)
-
-    # def show_crypto_tests_page(self, content_frame):
-    #     show_password_generator_page(content_frame)
 
     def show_brute_force_page(self, content_frame):
         """
