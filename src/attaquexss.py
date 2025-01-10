@@ -6,6 +6,7 @@ import webbrowser
 from datetime import datetime
 from PIL import Image, ImageTk
 from shared import navigate_to_page
+import threading
 
 
 class XSSApp:
