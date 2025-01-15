@@ -48,7 +48,7 @@ class SQLInjectionTester:
         encoded_payload = self.encode_sql_payload(payload) if self.db_type == "sql" else payload
         
         # Construction de l'URL de test avec le payload
-        test_url = f"{self.url}?id={encoded_payload}"
+        test_url = f"{self.url}{encoded_payload}"
 
         # Définir les en-têtes pour simuler une requête normale (pas un bot)
         headers = {
@@ -292,9 +292,10 @@ class SQLInjectionApp:
         for payload_data in payloads:
             payload = payload_data.get("payload")
             description = payload_data.get("description")
-            detected, result = self.sql_tester.test_injection(payload, description)
+            cve = payload_data.get("cve")  # Ajout des CVE depuis les données JSON
+            detected, result = self.sql_tester.test_injection(payload, description, cve)
             if detected:
-                self.display_result(f"[!] Vulnérabilité détectée : {result}\n")
+                self.display_result(f"[!] Vulnérabilité détectée : {result['description']} (CVE : {result['cve']})\n")
             else:
                 self.display_result("[-] Pas de vulnérabilité détectée.\n")
 

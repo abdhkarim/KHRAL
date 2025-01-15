@@ -4,22 +4,13 @@ import requests
 import json
 import webbrowser
 from datetime import datetime
-from PIL import Image, ImageTk
-from shared import navigate_to_page
-import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 class XSSApp:
     def __init__(self, container):
         """
         Initialise l'application XSSApp.
-        
-        Cette méthode définit les chemins des fichiers nécessaires pour les payloads 
-        et l'historique des vulnérabilités. Elle appelle également la méthode `create_widgets`
-        pour créer l'interface utilisateur de l'application.
-
-        Paramètres :
-        container (tkinter.Widget) : Le conteneur parent dans lequel les widgets de l'application seront ajoutés.
         """
         self.container = container
         self.payloads_file = "src/payloads/XSS/payloadXSS.txt"  # Fichier texte pour les payloads
@@ -29,16 +20,7 @@ class XSSApp:
     def create_widgets(self):
         """
         Crée tous les widgets pour l'interface utilisateur de l'application XSSApp.
-
-        Cette méthode construit l'interface graphique de l'application, y compris :
-        - La zone d'affichage des vulnérabilités historiques.
-        - Un champ de saisie pour l'URL cible.
-        - Un bouton pour lancer le test de vulnérabilité XSS.
-        - Un bouton pour ouvrir la documentation OWASP XSS.
-
-        Elle configure également les boutons pour interagir avec l'application.
         """
-        # Effacer le contenu existant dans le conteneur
         self.clear_container()
 
         # Colonne pour l'historique
@@ -94,52 +76,26 @@ class XSSApp:
     def open_documentation(self):
         """
         Ouvre la documentation OWASP XSS dans le navigateur par défaut.
-
-        Cette méthode redirige l'utilisateur vers la page officielle OWASP pour l'attaque XSS 
-        afin qu'il puisse consulter des informations détaillées sur cette vulnérabilité.
-
-        Aucun paramètre n'est nécessaire et la méthode ne renvoie rien.
         """
         webbrowser.open("https://owasp.org/www-community/attacks/xss/")
 
     def load_payloads(self):
         """
         Charge les payloads XSS à partir d'un fichier texte.
-
-        Cette méthode lit le fichier spécifié dans `self.payloads_file` (par défaut "src/payloads/XSS/payloadXSS.txt") 
-        et retourne une liste de payloads XSS qui seront utilisés pour les tests de vulnérabilité.
-
-        Elle gère les erreurs de fichier manquant ou d'autres exceptions et renvoie une liste vide si une erreur se produit.
-
-        Retours :
-        list : Une liste de chaînes représentant les payloads XSS.
         """
         try:
             with open(self.payloads_file, "r", encoding="utf-8") as file:
-                # Lire toutes les lignes et les nettoyer des caractères inutiles (par exemple les retours à la ligne)
-                payloads = [line.strip() for line in file.readlines()]
-            return payloads
+                return [line.strip() for line in file if line.strip()]
         except FileNotFoundError:
-            print(f"Le fichier {self.payloads_file} est introuvable.")
+            print(f"Fichier introuvable : {self.payloads_file}")
             return []
         except Exception as e:
-            print(f"Erreur lors du chargement du fichier : {e}")
+            print(f"Erreur lors du chargement des payloads : {e}")
             return []
 
     def save_vulnerability(self, data):
         """
-        Enregistre une vulnérabilité détectée dans un fichier JSON.
-
-        Cette méthode prend un dictionnaire contenant les informations de la vulnérabilité, 
-        puis l'ajoute à un fichier JSON (par défaut "vulnerabilities.json") qui conserve un historique des vulnérabilités détectées.
-
-        Si le fichier JSON n'existe pas ou est vide, il est créé. Si le fichier est corrompu, une nouvelle liste vide est utilisée.
-
-        Paramètres :
-        data (dict) : Un dictionnaire contenant les informations de la vulnérabilité. 
-                      Exemple : {'url': 'http://example.com', 'payload': '<script>alert(1)</script>', 'description': 'XSS trouvé', 'time': '2025-01-07 10:30:00'}
-
-        Aucun retour.
+        Enregistre une vulnérabilité dans un fichier JSON.
         """
         try:
             with open(self.vuln_file, "r", encoding="utf-8") as file:
@@ -154,14 +110,7 @@ class XSSApp:
 
     def test_xss(self):
         """
-        Teste la vulnérabilité XSS sur une URL donnée en utilisant des payloads.
-
-        Cette méthode récupère l'URL entrée par l'utilisateur, charge les payloads XSS et effectue des requêtes GET sur l'URL 
-        pour chaque payload. Si un payload est renvoyé dans la réponse du serveur, cela signifie que l'URL est vulnérable à l'attaque XSS.
-
-        Les résultats des tests sont affichés dans une zone de texte et les vulnérabilités détectées sont enregistrées dans un fichier JSON.
-
-        Aucun paramètre n'est nécessaire et la méthode ne renvoie rien.
+        Teste les vulnérabilités XSS avec multithreading.
         """
         url = self.url_entry.get()
         payloads = self.load_payloads()
@@ -172,37 +121,35 @@ class XSSApp:
             self.results_text.configure(state="disabled")
             return
 
-        successful_tests = []  # Liste des tests réussis
+        successful_tests = []
 
-        # Effacer l'ancien contenu
-        self.results_text.configure(state="normal")
-        self.results_text.delete("1.0", "end")
-
-        for payload in payloads:
-            # Construire l'URL avec le payload
+        def test_payload(payload):
+            """Teste un payload XSS sur une URL."""
             test_url = f"{url}{payload}"
-
             try:
-                response = requests.get(test_url)
-
+                response = requests.get(test_url, timeout=5)
                 if payload in response.text:
-                    # Affiche uniquement le payload vulnérable
-                    self.results_text.insert("end", f"{payload}\n")
-
-                    # Enregistre les vulnérabilités
-                    vulnerability = {
+                    return {
                         "url": url,
                         "payload": payload,
                         "description": "XSS trouvé",
                         "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                     }
-                    self.save_vulnerability(vulnerability)
+            except requests.RequestException as e:
+                return {"error": f"Erreur avec le payload {payload}: {str(e)}"}
 
-                    successful_tests.append(payload)
-            except Exception as e:
-                self.results_text.insert("end", f"Erreur lors de la requête : {e}\n")
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            future_to_payload = {executor.submit(test_payload, payload): payload for payload in payloads}
 
-        # Affiche le nombre de vulnérabilités détectées ou aucun
+            for future in as_completed(future_to_payload):
+                result = future.result()
+                if isinstance(result, dict) and "error" not in result:
+                    self.save_vulnerability(result)
+                    successful_tests.append(result["payload"])
+                    self.results_text.insert("end", f"Vulnérabilité trouvée : {result['payload']}\n")
+                elif "error" in result:
+                    self.results_text.insert("end", f"{result['error']}\n")
+
         if successful_tests:
             self.results_text.insert("end", f"\n{len(successful_tests)} vulnérabilité(s) détectée(s).\n")
         else:
@@ -213,12 +160,6 @@ class XSSApp:
     def clear_container(self):
         """
         Efface tous les widgets contenus dans le conteneur de l'application.
-
-        Cette méthode parcourt tous les widgets dans le conteneur parent et les supprime afin de réinitialiser l'interface 
-        avant d'ajouter de nouveaux widgets. Elle est utile pour naviguer entre différentes pages de l'application.
-
-        Aucun paramètre n'est nécessaire et la méthode ne renvoie rien.
         """
         for widget in self.container.winfo_children():
             widget.destroy()
-
