@@ -39,41 +39,34 @@ class SQLInjectionTester:
         """Encode un payload SQL pour qu'il soit correctement transmis dans l'URL."""
         return urllib.parse.quote(payload)
 
-    def test_injection(self, payload, description):
+    def test_injection(self, payload, description, cve):
         """
         Test d'injection SQL en envoyant un payload et en vérifiant les erreurs dans la réponse.
         """
-
-        # Encoder le payload si nécessaire (selon le type de base de données)
         encoded_payload = self.encode_sql_payload(payload) if self.db_type == "sql" else payload
-        
-        # Construction de l'URL de test avec le payload
-        test_url = f"{self.url}{encoded_payload}"
-
-        # Définir les en-têtes pour simuler une requête normale (pas un bot)
+        test_url = f"{self.url}?id={encoded_payload}"
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
         }
 
         try:
-            # Exécuter la requête HTTP GET
             response = requests.get(test_url, headers=headers, timeout=10)
-
-            # Vérification de la réponse pour détecter des erreurs spécifiques liées aux injections SQL
             if self.db_type == "sql":
                 error_keywords = ["sql syntax", "mysql", "syntax error", "unclosed quotation mark", "odbc"]
                 detected = any(keyword in response.text.lower() for keyword in error_keywords)
-            else:  # Traitement pour NoSQL (par exemple MongoDB)
+            else:
                 no_sql_keywords = ["mongodb", "no sql", "bson", "unrecognized"]
                 detected = any(keyword in response.text.lower() for keyword in no_sql_keywords)
 
-            # Retourner un message indiquant si une vulnérabilité a été détectée
-            return detected, description if detected else "Aucune vulnérabilité détectée"
+            if detected:
+                return True, {"description": description, "cve": cve}
+            else:
+                return False, "Aucune vulnérabilité détectée"
         except requests.exceptions.RequestException as e:
-            # Gestion des erreurs de réseau ou autres exceptions
             error_message = f"[!] Erreur lors de la requête HTTP : {str(e)}"
             print(error_message)
             return False, error_message
+
 
 class VulnerabilityManager:
     def __init__(self, vuln_file="vulnerabilities.json"):
