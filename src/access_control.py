@@ -175,7 +175,7 @@ class AccessControlApp:
 
         for user_id in user_ids:
             # Exemple d'URL avec un paramètre d'ID utilisateur
-            test_url = f"{url}/profile?id={user_id}"
+            test_url = f"{url}/{user_id}"
             response = session.get(test_url)
 
             if response.status_code == 200:
@@ -193,7 +193,6 @@ class AccessControlApp:
 
         return "\n".join(results)
     
-    import requests
 
     def test_vertical_access(self, url):
         """
@@ -203,6 +202,7 @@ class AccessControlApp:
         admin_urls = [
             f"{url}/admin/dashboard",
             f"{url}/admin",
+            f"{url}/dashboard",
             f"{url}/admin/tableofuser"
         ]
         
